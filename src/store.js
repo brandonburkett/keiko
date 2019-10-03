@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 /**
  * Kata Module
+ * ambiguous: true = kata name is in multiple series
  */
 const kata = {
   state: {
@@ -42,6 +43,7 @@ const kata = {
         kanji: '八重垣',
         meaning: 'Barriers within barriers',
         seriesKey: 'shoden',
+        ambiguous: true,
         order: 5,
       },
       {
@@ -49,6 +51,7 @@ const kata = {
         kanji: '受流',
         meaning: 'Flowing block / receive and deflect',
         seriesKey: 'shoden',
+        ambiguous: true,
         order: 6,
       },
       {
