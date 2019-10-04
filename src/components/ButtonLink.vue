@@ -24,7 +24,7 @@ export default {
     size: {
       type: String,
       default: 'small',
-      validator: val => ['small', 'medium', 'large'].includes(val),
+      validator: val => ['small', 'medium', 'large', 'xlarge'].includes(val),
     },
   },
   computed: {
@@ -49,6 +49,8 @@ export default {
         classList.push('py-2 px-5');
       } else if (this.size === 'large') {
         classList.push('py-3 px-6 text-xl');
+      } else if (this.size === 'xlarge') {
+        classList.push('py-4 px-8 text-2xl');
       }
 
       return classList.join(' ');
