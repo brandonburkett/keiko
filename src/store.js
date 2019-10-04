@@ -8,6 +8,8 @@ Vue.use(Vuex);
  * ambiguous: true = kata name is in multiple series
  */
 const kata = {
+  namespaced: true,
+
   state: {
     list: [
       {
@@ -96,13 +98,25 @@ const kata = {
         kanji: '初傳技',
       },
     },
-    active: null,
-    previous: null,
-    completed: 0,
+    // array of indexes for the completed kata list
+    completed: [],
+  },
+  mutations: {
+    markComplete: (state, listIndex) => state.completed.push(listIndex),
   },
   getters: {
-    getSeries: state => key => {
-      return state.series[key];
+    getSeries: state => key => state.series[key],
+    completedTotal: state => state.completed.length,
+    remaining: state => state.list.length - state.completed.length,
+
+    // get next kata that has not already been completed
+    nextKata: state => {
+      const remainingKata = state.list.filter((kata, index) => !state.completed.includes(index));
+      const min = 0;
+      const max = remainingKata.length;
+      const next = Math.floor(Math.random() * (max - min)) + min;
+
+      return remainingKata[next];
     },
   },
 };

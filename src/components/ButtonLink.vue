@@ -1,34 +1,25 @@
 <template>
-  <button
-    :type="type"
-    :class="styles"
-    aria-live="polite"
-    @click.prevent="$emit('submit-action', $event)"
-  >
-    {{ loadingLabel }}
-  </button>
+  <router-link :to="to" :class="styles">
+    {{ label }}
+  </router-link>
 </template>
 
 <script>
 export default {
-  name: 'KeikoButton',
+  name: 'ButtonLink',
   props: {
-    type: {
-      type: String,
-      default: 'submit',
-    },
     label: {
       type: String,
       default: '',
     },
-    loading: {
-      type: Boolean,
-      default: false,
+    to: {
+      type: [String, Object],
+      default: '',
     },
     styleType: {
       type: String,
       default: 'standard',
-      validator: val => ['standard', 'inverted'].includes(val),
+      validator: val => ['standard', 'inverted', 'link'].includes(val),
     },
     size: {
       type: String,
@@ -43,11 +34,11 @@ export default {
       // types
       if (this.styleType === 'standard') {
         classList = [
-          'border-2 border-gray-800 bg-gray-800 text-gray-100 font-semibold rounded hover:bg-gray-900 transition',
+          'border-2 border-gray-900 bg-gray-900 text-gray-ice font-semibold rounded hover:bg-gray-800 transition',
         ];
       } else if (this.styleType === 'inverted') {
         classList = [
-          'border-2 border-gray-800 bg-transparent text-gray-800 font-semibold rounded hover:bg-gray-200 transition',
+          'border-2 border-gray-900 bg-gray-100 text-gray-900 font-semibold rounded hover:bg-white transition',
         ];
       }
 
@@ -61,10 +52,6 @@ export default {
       }
 
       return classList.join(' ');
-    },
-
-    loadingLabel() {
-      return this.loading ? 'Loading...' : this.label;
     },
   },
 };

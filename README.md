@@ -1,22 +1,31 @@
 # Keiko
 Semi-randomly display kata names for training.
+* All kihon kata
+* Randomly display "next" kata to perform, tracks against ones already completed
+* Supports restarting the keiko session to from the beginning
 
-## Project setup
+## Tech stack
+* Project generated with vue-cli
+* Uses Vue, Vuex, and tailwind css
+
+## NPM scripts
+
+### Project setup
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+#### Compiles and hot-reloads for development
 ```
 npm run start
 ```
 
-### Compiles and minifies for production
+#### Compiles and minifies for production
 ```
 npm run build
 ```
 
-### Lints and fixes files
+#### Lints and fixes files
 ```
 npm run lint
 ```
