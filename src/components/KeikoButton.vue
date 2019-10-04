@@ -43,11 +43,11 @@ export default {
       // types
       if (this.styleType === 'standard') {
         classList = [
-          'border-2 border-gray-800 bg-gray-800 text-gray-100 font-semibold rounded hover:bg-gray-900',
+          'border-2 border-gray-800 bg-gray-800 text-gray-100 font-semibold rounded hover:bg-gray-900 transition',
         ];
       } else if (this.styleType === 'inverted') {
         classList = [
-          'border-2 border-gray-800 bg-transparent text-gray-800 font-semibold rounded hover:bg-gray-200',
+          'border-2 border-gray-800 bg-transparent text-gray-800 font-semibold rounded hover:bg-gray-200 transition',
         ];
       }
 

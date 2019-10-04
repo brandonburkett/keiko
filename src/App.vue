@@ -14,4 +14,8 @@
 @tailwind components;
 
 @tailwind utilities;
+
+.transition {
+  transition: 0.3s;
+}
 </style>
