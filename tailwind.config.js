@@ -9,6 +9,9 @@ module.exports = {
       height: {
         'mini-screen': 'calc(100vh - 12.5rem - 2px)',
       },
+      fontSize: {
+        '7xl': '7rem',
+      },
     },
   },
 };

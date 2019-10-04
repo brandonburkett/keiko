@@ -125,14 +125,20 @@ const kata = {
         kata => !state.completed[`${kata.seriesKey}-${kata.order}`],
       );
 
-      if (!remainingKata.length) {
+      // none left
+      if (remainingKata.length === 0) {
         return null;
       }
 
+      // last one, no need for rand
+      if (remainingKata.length === 1) {
+        return remainingKata[0];
+      }
+
+      // rand
       const min = 0;
       const max = remainingKata.length;
       const next = Math.floor(Math.random() * (max - min)) + min;
-
       return remainingKata[next];
     },
   },

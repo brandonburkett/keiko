@@ -1,5 +1,6 @@
 <template>
   <div class="min-w-screen min-h-screen">
+    <!-- header -->
     <header
       class="bg-gray-900 flex justify-center items-center border-solid border-0 border-b-2 border-gray-ice"
     >
@@ -11,11 +12,15 @@
         />
       </div>
     </header>
+
+    <!-- main content -->
     <section class="bg-gray-100 text-gray-900">
       <div class="container h-mini-screen mx-auto p-8 bg-gray-100 sm:p-16">
         <slot />
       </div>
     </section>
+
+    <!-- footer -->
     <footer
       class="bg-gray-900 h-10 flex justify-center items-center border-solid border-0 border-t-2 border-gray-ice"
     >

@@ -9,25 +9,31 @@
       />
 
       <!-- waza -->
-      <!--      <div class="fw-100 m-0 mt-8 sm:w-4/5 sm:mx-auto text-center" v-if="remaining > 0">-->
-      <div class="text-center">
-        <h1 class="text-6xl font-bold">{{ kata.kanji }}</h1>
-        <h2 class="text-4xl font-bold mb-4">{{ kata.name }}</h2>
-        <p class="text-xl mb-2" v-if="kata.ambiguous && !showDetails">
-          {{ getSeries(kata.seriesKey).name }}
-        </p>
-        <p class="text-xl" v-show="showDetails">
-          {{ kata.meaning }}<br />
-          {{ getSeries(kata.seriesKey).kanji }}
-          {{ getSeries(kata.seriesKey).name }} - {{ kata.order }}
-        </p>
-        <Button
-          styleType="inverted"
-          size="small"
-          label="Details"
-          @button-action="handleDetails"
-          v-if="!showDetails"
-        />
+      <div class="text-center" v-if="remaining">
+        <h1 class="text-6xl font-bold sm:text-7xl">{{ kata.kanji }}</h1>
+        <h2 class="text-4xl font-bold mb-4 sm:text-6xl">{{ kata.name }}</h2>
+
+        <div class="h-20">
+          <p class="text-xl" v-if="kata.ambiguous && !showDetails">
+            {{ getSeries(kata.seriesKey).name }}
+          </p>
+          <p class="text-xl" v-show="showDetails">
+            {{ kata.meaning }}<br />
+            {{ getSeries(kata.seriesKey).kanji }}
+            {{ getSeries(kata.seriesKey).name }} - {{ kata.order }}
+          </p>
+          <div class="pt-1" v-if="!showDetails">
+            <Button
+              styleType="inverted"
+              size="small"
+              label="Details"
+              @button-action="handleDetails"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="text-center" v-else>
+        <h1 class="text-6xl font-bold sm:text-7xl">Awesome Job!</h1>
       </div>
 
       <!-- CTAs  -->
