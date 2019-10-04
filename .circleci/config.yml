@@ -20,12 +20,19 @@ jobs:
             sudo apt-get update && sudo apt-get install -qq -y python-pip libpython-dev
             curl -O https://bootstrap.pypa.io/get-pip.py && sudo python get-pip.py
             sudo pip install -q awscli --upgrade
+      # cache based on our lock file
+      - restore_cache:
+          key: npm-cache-{{ checksum "package.json" }}
       - run:
-          name: NPM Install
+          name: Install node modules
           command: npm install
+      - save_cache:
+          key: npm-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
       - run:
           name: NPM Build
-          command: npm build
+          command: npm run build
       - run:
           name: Deploy to S3
           command: aws s3 sync ./dist s3://$AWS_S3_BUCKET --delete --cache-control max-age=86400,public
