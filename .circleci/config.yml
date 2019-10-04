@@ -1,0 +1,40 @@
+version: 2
+jobs:
+  build:
+    branches:
+      only:
+        # currently only master deployments enabled
+        - master
+        #- /int\/.*/
+        #- /hot\/.*/
+    docker:
+      - image: circleci/node:12.11
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          # Run local steps before AWS is required so if they
+          # fail you don't waste build time installing AWS CLI
+
+          # Install AWS CLI
+          # - include aws cli ci docker:
+          #     https://github.com/circleci/circleci-images/issues/53
+          # - use global install for aws and pip instead of --user:
+          #     https://discuss.circleci.com/t/how-to-add-a-path-to-path-in-circle-2-0/11554
+          name: Install awscli
+          command: |
+            sudo apt-get update && sudo apt-get install -qq -y python-pip libpython-dev
+            curl -O https://bootstrap.pypa.io/get-pip.py && sudo python get-pip.py
+            sudo pip install -q awscli --upgrade
+      - run:
+          name: NPM Install
+          command: npm install
+      - run:
+          name: NPM Build
+          command: npm build
+      - run:
+          name: Deploy to S3
+          command: aws s3 sync ./dist s3://$AWS_S3_BUCKET --delete --cache-control max-age=86400,public
+      - run:
+          name: Create cloudfront invalidation
+          command: aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths "/*"
