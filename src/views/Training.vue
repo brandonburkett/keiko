@@ -2,8 +2,15 @@
   <PageFull>
     <div class="w-100 m-0 mt-10 sm:w-4/5 sm:mx-auto text-center">
       <h1 class="text-6xl font-bold">{{ kata.kanji }}</h1>
-      <h2 class="text-3xl font-bold mb-2">{{ kata.name }}</h2>
-      <p class="text-xl">test</p>
+      <h2 class="text-4xl font-bold mb-4">{{ kata.name }}</h2>
+      <p class="text-xl" v-show="showDetails">test</p>
+      <Button
+        styleType="inverted"
+        size="small"
+        label="Details"
+        @button-action="handleDetails"
+        v-if="!showDetails"
+      />
     </div>
 
     <!-- Progress  -->
@@ -36,7 +43,7 @@ export default {
   data() {
     return {
       kata: null,
-      showMeaning: false,
+      showDetails: false,
     };
   },
   /**
@@ -57,6 +64,10 @@ export default {
 
     handleNextKata() {
       console.log('next kata');
+    },
+
+    handleDetails() {
+      this.showDetails = true;
     },
   },
 };
