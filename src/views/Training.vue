@@ -1,35 +1,36 @@
 <template>
   <PageFull>
-    <!-- progress bar -->
-    <ProgressBar
-      :total="total"
-      :completedTotal="completedTotal"
-      :percentComplete="percentComplete"
-    />
-
-    <!-- waza -->
-    <div class="w-100 m-0 mt-8 sm:w-4/5 sm:mx-auto text-center" v-if="remaining > 0">
-      <h1 class="text-6xl font-bold">{{ kata.kanji }}</h1>
-      <h2 class="text-4xl font-bold mb-4">{{ kata.name }}</h2>
-      <p class="text-xl mb-2" v-if="kata.ambiguous && !showDetails">
-        {{ getSeries(kata.seriesKey).name }}
-      </p>
-      <p class="text-xl" v-show="showDetails">
-        {{ kata.meaning }}<br />
-        {{ getSeries(kata.seriesKey).kanji }}
-        {{ getSeries(kata.seriesKey).name }} - {{ kata.order }}
-      </p>
-      <Button
-        styleType="inverted"
-        size="small"
-        label="Details"
-        @button-action="handleDetails"
-        v-if="!showDetails"
+    <div class="flex flex-col justify-between h-full w-full">
+      <!-- progress bar -->
+      <ProgressBar
+        :total="total"
+        :completedTotal="completedTotal"
+        :percentComplete="percentComplete"
       />
-    </div>
 
-    <!-- CTAs  -->
-    <div class="absolute bottom-0 left-0 mb-10 px-8 min-w-full">
+      <!-- waza -->
+      <!--      <div class="fw-100 m-0 mt-8 sm:w-4/5 sm:mx-auto text-center" v-if="remaining > 0">-->
+      <div class="text-center">
+        <h1 class="text-6xl font-bold">{{ kata.kanji }}</h1>
+        <h2 class="text-4xl font-bold mb-4">{{ kata.name }}</h2>
+        <p class="text-xl mb-2" v-if="kata.ambiguous && !showDetails">
+          {{ getSeries(kata.seriesKey).name }}
+        </p>
+        <p class="text-xl" v-show="showDetails">
+          {{ kata.meaning }}<br />
+          {{ getSeries(kata.seriesKey).kanji }}
+          {{ getSeries(kata.seriesKey).name }} - {{ kata.order }}
+        </p>
+        <Button
+          styleType="inverted"
+          size="small"
+          label="Details"
+          @button-action="handleDetails"
+          v-if="!showDetails"
+        />
+      </div>
+
+      <!-- CTAs  -->
       <div class="flex justify-between items-center" v-if="remaining">
         <Button
           styleType="inverted"

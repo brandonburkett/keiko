@@ -1,12 +1,12 @@
 <template>
   <div
-    class="w-100"
+    class="w-full"
     role="progressbar"
     :aria-valuenow="completedTotal"
     aria-valuemin="0"
     :aria-valuemax="total"
   >
-    <div class="w-100 h-6 rounded bg-gray-ice border-gray-900 border-2 relative">
+    <div class="w-full h-6 rounded bg-gray-100 border-gray-900 border-2 relative">
       <span
         class="absolute top-0 left-0 bg-gray-900 min-h-full transition"
         :style="{ width: percentComplete }"

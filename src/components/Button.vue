@@ -48,7 +48,7 @@ export default {
       // types
       if (this.styleType === 'standard') {
         classList = [
-          'border-2 border-gray-900 bg-gray-900 text-gray-ice font-semibold rounded hover:bg-gray-800 transition',
+          'border-2 border-gray-900 bg-gray-900 text-gray-100 font-semibold rounded hover:bg-gray-800 transition',
         ];
       } else if (this.styleType === 'inverted') {
         classList = [

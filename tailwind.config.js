@@ -6,7 +6,7 @@ module.exports = {
       },
 
       // used for container, accounts for header / footer / border
-      minHeight: {
+      height: {
         'mini-screen': 'calc(100vh - 12.5rem - 2px)',
       },
     },
