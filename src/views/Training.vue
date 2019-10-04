@@ -1,9 +1,24 @@
 <template>
   <PageFull>
-    <div class="w-100 m-0 mt-10 sm:w-4/5 sm:mx-auto text-center">
+    <!-- progress bar -->
+    <ProgressBar
+      :total="total"
+      :completedTotal="completedTotal"
+      :percentComplete="percentComplete"
+    />
+
+    <!-- waza -->
+    <div class="w-100 m-0 mt-8 sm:w-4/5 sm:mx-auto text-center" v-if="remaining > 0">
       <h1 class="text-6xl font-bold">{{ kata.kanji }}</h1>
       <h2 class="text-4xl font-bold mb-4">{{ kata.name }}</h2>
-      <p class="text-xl" v-show="showDetails">test</p>
+      <p class="text-xl mb-2" v-if="kata.ambiguous && !showDetails">
+        {{ getSeries(kata.seriesKey).name }}
+      </p>
+      <p class="text-xl" v-show="showDetails">
+        {{ kata.meaning }}<br />
+        {{ getSeries(kata.seriesKey).kanji }}
+        {{ getSeries(kata.seriesKey).name }} - {{ kata.order }}
+      </p>
       <Button
         styleType="inverted"
         size="small"
@@ -13,9 +28,9 @@
       />
     </div>
 
-    <!-- Progress  -->
+    <!-- CTAs  -->
     <div class="absolute bottom-0 left-0 mb-10 px-8 min-w-full">
-      <div class="flex justify-between items-center">
+      <div class="flex justify-between items-center" v-if="remaining">
         <Button
           styleType="inverted"
           size="small"
@@ -23,7 +38,15 @@
           @button-action="handleStartOver"
         />
 
-        <Button size="large" label="Next Kata ⇒" @button-action="handleNextKata" />
+        <Button size="large" label="Next ⇒" @button-action="handleNextKata" />
+      </div>
+      <div class="flex justify-center items-center" v-else>
+        <Button
+          styleType="inverted"
+          size="large"
+          label="Restart"
+          @button-action="handleStartOver"
+        />
       </div>
     </div>
   </PageFull>
@@ -33,12 +56,14 @@
 import { mapMutations, mapGetters } from 'vuex';
 import PageFull from '@/components/PageFull.vue';
 import Button from '@/components/Button.vue';
+import ProgressBar from '@/components/ProgressBar.vue';
 
 export default {
   name: 'Training',
   components: {
     PageFull,
     Button,
+    ProgressBar,
   },
   data() {
     return {
@@ -50,20 +75,38 @@ export default {
    * Get rand kata
    */
   created() {
-    this.kata = this.nextKata;
+    this.handleNextKata();
   },
   computed: {
-    ...mapGetters('kata', ['getSeries', 'completedTotal', 'remaining', 'nextKata']),
+    ...mapGetters('kata', [
+      'getSeries',
+      'percentComplete',
+      'total',
+      'completedTotal',
+      'remaining',
+      'nextKata',
+    ]),
   },
   methods: {
-    ...mapMutations('kata', ['markComplete']),
+    ...mapMutations('kata', ['markComplete', 'resetComplete']),
 
     handleStartOver() {
-      console.log('start over');
+      this.kata = null;
+      this.resetComplete();
+      this.handleNextKata();
     },
 
     handleNextKata() {
-      console.log('next kata');
+      // reset details
+      this.showDetails = false;
+
+      // complete kata
+      if (this.kata) {
+        this.markComplete(this.kata);
+      }
+
+      // get next
+      this.kata = this.nextKata();
     },
 
     handleDetails() {

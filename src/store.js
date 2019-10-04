@@ -59,7 +59,7 @@ const kata = {
       {
         name: 'Kaishaku',
         kanji: '介錯',
-        meaning: 'Second / seppuku assistan',
+        meaning: 'Second / seppuku assistant',
         seriesKey: 'shoden',
         order: 7,
       },
@@ -99,19 +99,36 @@ const kata = {
       },
     },
     // array of indexes for the completed kata list
-    completed: [],
+    completed: {},
   },
   mutations: {
-    markComplete: (state, listIndex) => state.completed.push(listIndex),
+    markComplete: (state, { seriesKey, order }) => {
+      state.completed = { ...state.completed, [`${seriesKey}-${order}`]: true };
+    },
+    resetComplete: state => {
+      state.completed = {};
+    },
   },
   getters: {
     getSeries: state => key => state.series[key],
-    completedTotal: state => state.completed.length,
-    remaining: state => state.list.length - state.completed.length,
+    total: state => state.list.length,
+    completedTotal: state => Object.keys(state.completed).length,
+    percentComplete: state =>
+      (Object.keys(state.completed).length / state.list.length).toLocaleString('en-us', {
+        style: 'percent',
+      }),
+    remaining: state => state.list.length - Object.keys(state.completed).length,
 
     // get next kata that has not already been completed
-    nextKata: state => {
-      const remainingKata = state.list.filter((kata, index) => !state.completed.includes(index));
+    nextKata: state => () => {
+      const remainingKata = state.list.filter(
+        kata => !state.completed[`${kata.seriesKey}-${kata.order}`],
+      );
+
+      if (!remainingKata.length) {
+        return null;
+      }
+
       const min = 0;
       const max = remainingKata.length;
       const next = Math.floor(Math.random() * (max - min)) + min;
