@@ -1,5 +1,5 @@
 <template>
-  <div class="min-w-screen test-screen-mobile overflow-y-hidden">
+  <div class="min-w-screen h-mobile-screen overflow-y-hidden">
     <!-- header -->
     <header
       class="bg-gray-900 h-20 w-auto flex justify-center items-center border-solid border-0 border-b-2 border-gray-ice sm:h-40"
@@ -29,19 +29,12 @@
 </template>
 
 <style scoped>
-.test-screen-mobile {
-  height: 100vh;
-  height: -moz-available;
-  height: -webkit-fill-available;
-  height: fill-available;
-}
-
-.test-screen-mobile2 {
-  height: 100%;
-  height: -moz-available;
-  height: -webkit-fill-available;
-  height: fill-available;
-}
+/*.test-screen-mobile {*/
+/*  height: 100vh;*/
+/*  height: -moz-available;*/
+/*  height: -webkit-fill-available;*/
+/*  height: fill-available;*/
+/*}*/
 </style>
 
 <script>

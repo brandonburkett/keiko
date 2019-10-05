@@ -10,6 +10,7 @@ module.exports = {
         // 'screen-mobile': 'calc(var(--vh, 1vh) * 100)',
         // 'mini-screen-sm': 'calc((var(--vh, 1vh) * 100) - 8em)',
         // 'mini-screen': 'calc((var(--vh, 1vh) * 100) - 13rem)',
+        'mobile-screen': 'var(--vh)',
         'body-screen-sm': 'calc(var(--vh) - 8em)',
         'body-screen': 'calc(var(--vh) - 13em)',
         // 'mini-screen-sm': 'calc(100vh - 8rem)',
