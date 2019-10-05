@@ -10,8 +10,8 @@
 
       <!-- waza -->
       <div class="text-center" v-if="remaining">
-        <h1 class="text-6xl font-bold sm:text-7xl">{{ kata.kanji }}</h1>
-        <h2 class="text-4xl font-bold mb-4 sm:text-6xl">{{ kata.name }}</h2>
+        <h1 class="text-6xl font-bold sm:text-6xl xl:text-7xl">{{ kata.kanji }}</h1>
+        <h2 class="text-4xl font-bold mb-4 sm:text-4xl xl:text-6xl">{{ kata.name }}</h2>
 
         <div class="h-20">
           <p class="text-xl" v-if="kata.ambiguous && !showDetails">
