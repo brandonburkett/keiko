@@ -1,5 +1,5 @@
 <template>
-  <div class="min-w-screen h-screen-mobile overflow-y-hidden">
+  <div class="min-w-screen test-screen-mobile overflow-y-hidden">
     <!-- header -->
     <header
       class="bg-gray-900 h-20 w-auto flex justify-center items-center border-solid border-0 border-b-2 border-gray-ice sm:h-40"
@@ -13,7 +13,8 @@
 
     <!-- main content -->
     <section class="bg-gray-100 text-gray-900">
-      <div class="container h-mini-screen-sm mx-auto p-8 bg-gray-100 sm:p-16 sm:h-mini-screen">
+      <!--      <div class="container h-mini-screen-sm mx-auto p-8 bg-gray-100 sm:p-16 sm:h-mini-screen">-->
+      <div class="container h-body-screen-sm mx-auto p-8 bg-gray-100 sm:p-16 sm:h-body-screen">
         <slot />
       </div>
     </section>
@@ -26,6 +27,22 @@
     </footer>
   </div>
 </template>
+
+<style scoped>
+.test-screen-mobile {
+  height: 100vh;
+  height: -moz-available;
+  height: -webkit-fill-available;
+  height: fill-available;
+}
+
+.test-screen-mobile2 {
+  height: 100%;
+  height: -moz-available;
+  height: -webkit-fill-available;
+  height: fill-available;
+}
+</style>
 
 <script>
 export default {

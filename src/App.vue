@@ -20,13 +20,23 @@
 export default {
   name: 'App',
   mounted() {
-    let vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    const setFullHeight = () => {
+      // let vh = window.innerHeight * 0.01;
+      // document.documentElement.style.setProperty('--vh', `${vh}px`);
+      const vh = window.innerHeight;
+      // console.log('setFullHeight', vh);
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+
+    setFullHeight();
+
+    // iOS sometimes has a blip when opening the very first time
+    this.$nextTick(() => {
+      setFullHeight();
+    });
 
     window.addEventListener('resize', () => {
-      // We execute the same script as before
-      let vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
+      setFullHeight();
     });
   },
 };

@@ -7,9 +7,11 @@ module.exports = {
 
       // used for container, accounts for header / footer / border
       height: {
-        'screen-mobile': 'calc(var(--vh, 1vh) * 100)',
-        'mini-screen-sm': 'calc((var(--vh, 1vh) * 100) - 8em)',
-        'mini-screen': 'calc((var(--vh, 1vh) * 100) - 13rem)',
+        // 'screen-mobile': 'calc(var(--vh, 1vh) * 100)',
+        // 'mini-screen-sm': 'calc((var(--vh, 1vh) * 100) - 8em)',
+        // 'mini-screen': 'calc((var(--vh, 1vh) * 100) - 13rem)',
+        'body-screen-sm': 'calc(var(--vh) - 8em)',
+        'body-screen': 'calc(var(--vh) - 13em)',
         // 'mini-screen-sm': 'calc(100vh - 8rem)',
         // 'mini-screen': 'calc(100vh - 13rem)',
       },
