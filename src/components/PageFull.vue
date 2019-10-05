@@ -1,5 +1,5 @@
 <template>
-  <div class="min-w-screen min-h-screen">
+  <div class="min-w-screen min-h-screen overflow-y-hidden">
     <!-- header -->
     <header
       class="bg-gray-900 h-20 w-auto flex justify-center items-center border-solid border-0 border-b-2 border-gray-ice sm:h-40"
