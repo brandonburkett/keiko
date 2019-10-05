@@ -7,8 +7,10 @@ module.exports = {
 
       // used for container, accounts for header / footer / border
       height: {
-        'mini-screen-sm': 'calc(100vh - 8rem)',
-        'mini-screen': 'calc(100vh - 13rem)',
+        'mini-screen-sm': 'calc((var(--vh, 1vh) * 100) - 8em)',
+        'mini-screen': 'calc((var(--vh, 1vh) * 100) - 13rem)',
+        // 'mini-screen-sm': 'calc(100vh - 8rem)',
+        // 'mini-screen': 'calc(100vh - 13rem)',
       },
       fontSize: {
         '7xl': '7rem',
