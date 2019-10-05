@@ -32,12 +32,12 @@ export default {
 
     // iOS sometimes has a blip when opening the very first time
     this.$nextTick(() => {
-      setTimeout(() => setFullHeight(), 100);
+      const event = document.createEvent('HTMLEvents');
+      event.initEvent('resize', true, false);
+      document.dispatchEvent(event);
     });
 
-    window.addEventListener('resize', () => {
-      setFullHeight();
-    });
+    window.addEventListener('resize', setFullHeight);
   },
 };
 </script>
