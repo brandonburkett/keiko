@@ -37,7 +37,9 @@ export default {
       document.dispatchEvent(event);
     });
 
+    // trigger height var update on events
     window.addEventListener('resize', setFullHeight);
+    window.addEventListener('orientationchange', setFullHeight);
   },
 };
 </script>
