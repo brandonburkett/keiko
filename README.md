@@ -8,6 +8,12 @@ Semi-randomly display kata names for training.
 * Project generated with vue-cli
 * Uses Vue, Vuex, and tailwind css
 
+---
+
+[](keiko.gif)
+
+---
+
 ## NPM scripts
 
 ### Project setup
