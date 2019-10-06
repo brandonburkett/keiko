@@ -10,7 +10,7 @@ Semi-randomly display kata names for training.
 
 ---
 
-[](keiko.gif)
+![](keiko.gif)
 
 ---
 
