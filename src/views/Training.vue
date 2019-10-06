@@ -84,6 +84,7 @@ export default {
   created() {
     // set series focus from URL
     this.setSeriesFocus(this.$route.query.series || 'all');
+    this.setOrder(this.$route.query.order || 'random');
     this.handleNextKata();
   },
   computed: {
@@ -97,7 +98,7 @@ export default {
     ]),
   },
   methods: {
-    ...mapMutations('kata', ['markComplete', 'resetComplete', 'setSeriesFocus']),
+    ...mapMutations('kata', ['markComplete', 'resetComplete', 'setSeriesFocus', 'setOrder']),
 
     handleStartOver() {
       this.kata = null;

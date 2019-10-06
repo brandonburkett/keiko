@@ -20,11 +20,21 @@
             :value="form.series"
           />
 
+          <div class="mt-4 w-full">
+            <BaseSelect
+              name="order"
+              label="Select Order"
+              :options="seriesOrder"
+              v-model="form.order"
+              :value="form.order"
+            />
+          </div>
+
           <div class="mt-8 w-full">
             <ButtonLink
               size="xlarge"
               label="Begin Training"
-              :to="`/training?series=${form.series}`"
+              :to="`/training?series=${form.series}&order=${form.order}`"
               classes="block w-full"
             />
           </div>
@@ -51,6 +61,7 @@ export default {
     return {
       form: {
         series: 'all',
+        order: 'random',
       },
     };
   },
@@ -64,6 +75,20 @@ export default {
           kanji: '',
         },
         ...this.$store.getters['kata/seriesList'],
+      ];
+    },
+    seriesOrder() {
+      return [
+        {
+          key: 'sequential',
+          value: 'sequential',
+          name: 'Sequential',
+        },
+        {
+          key: 'random',
+          value: 'random',
+          name: 'Random',
+        },
       ];
     },
   },

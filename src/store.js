@@ -578,6 +578,7 @@ const kata = {
     completed: {},
     // selected series
     selectedSeries: 'all',
+    selectedOrder: 'random',
   },
   mutations: {
     markComplete: (state, { seriesKey, order }) => {
@@ -588,6 +589,9 @@ const kata = {
     },
     setSeriesFocus: (state, seriesKey) => {
       state.selectedSeries = seriesKey;
+    },
+    setOrder: (state, order) => {
+      state.selectedOrder = order;
     },
   },
   getters: {
@@ -695,10 +699,15 @@ const kata = {
       }
 
       // rand
-      const min = 0;
-      const max = remainingKata.length;
-      const next = Math.floor(Math.random() * (max - min)) + min;
-      return remainingKata[next];
+      if (state.selectedOrder === 'random') {
+        const min = 0;
+        const max = remainingKata.length;
+        const next = Math.floor(Math.random() * (max - min)) + min;
+        return remainingKata[next];
+      }
+
+      // sequential
+      return remainingKata[0];
     },
   },
 };
