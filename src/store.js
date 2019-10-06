@@ -576,6 +576,8 @@ const kata = {
     },
     // array of indexes for the completed kata list
     completed: {},
+    // selected series
+    selectedSeries: 'all',
   },
   mutations: {
     markComplete: (state, { seriesKey, order }) => {
@@ -584,9 +586,18 @@ const kata = {
     resetComplete: state => {
       state.completed = {};
     },
+    setSeriesFocus: (state, seriesKey) => {
+      state.selectedSeries = seriesKey;
+    },
   },
   getters: {
-    getSeries: state => key => state.series[key],
+    seriesByKey: state => key => state.series[key],
+    seriesList: state =>
+      Object.keys(state.series).map(key => ({
+        ...state.series[key],
+        key,
+        value: key,
+      })),
     total: state => state.list.length,
     completedTotal: state => Object.keys(state.completed).length,
     percentComplete: state =>

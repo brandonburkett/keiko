@@ -4,11 +4,13 @@
     <header
       class="bg-gray-900 h-20 w-auto flex justify-center items-center border-solid border-0 border-b-2 border-gray-ice sm:h-40"
     >
-      <img
-        class="p-4 object-contain h-full w-auto"
-        alt="Keiko Isshin"
-        src="../assets/images/isshin-ice2-800.png"
-      />
+      <router-link to="/" class="p-4 h-full w-auto">
+        <img
+          class="object-contain h-full w-auto"
+          alt="Keiko Isshin"
+          src="../assets/images/isshin-ice2-800.png"
+        />
+      </router-link>
     </header>
 
     <!-- main content -->

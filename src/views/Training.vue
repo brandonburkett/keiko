@@ -15,12 +15,12 @@
 
         <div class="h-20">
           <p class="text-xl" v-if="kata.ambiguous && !showDetails">
-            {{ getSeries(kata.seriesKey).name }}
+            {{ seriesByKey(kata.seriesKey).name }}
           </p>
           <p class="text-xl" v-show="showDetails">
             {{ kata.meaning }}<br />
-            {{ getSeries(kata.seriesKey).kanji }}
-            {{ getSeries(kata.seriesKey).name }} - {{ kata.order }}
+            {{ seriesByKey(kata.seriesKey).kanji }}
+            {{ seriesByKey(kata.seriesKey).name }} - {{ kata.order }}
           </p>
           <div class="pt-1" v-if="!showDetails">
             <Button
@@ -86,7 +86,7 @@ export default {
   },
   computed: {
     ...mapGetters('kata', [
-      'getSeries',
+      'seriesByKey',
       'percentComplete',
       'total',
       'completedTotal',

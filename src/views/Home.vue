@@ -12,7 +12,16 @@
       <!-- CTAs -->
       <div class="mt-8">
         <div class="flex flex-col justify-center items-center">
-          <ButtonLink size="xlarge" label="Begin Training" to="/training" />
+          <div>
+            <BaseSelect
+              name="series"
+              label="Select Series"
+              :options="seriesOptions"
+              v-model="form.series"
+              :value="form.series"
+            />
+            <ButtonLink size="xlarge" label="Begin Training" to="/training" />
+          </div>
         </div>
       </div>
     </div>
@@ -21,14 +30,40 @@
 
 <script>
 // @ is an alias to /src
+import { mapMutations } from 'vuex';
 import PageFull from '@/components/PageFull.vue';
 import ButtonLink from '@/components/ButtonLink.vue';
+import BaseSelect from '@/components/BaseSelect.vue';
 
 export default {
   name: 'Home',
   components: {
     PageFull,
     ButtonLink,
+    BaseSelect,
+  },
+  data() {
+    return {
+      form: {
+        series: 'all',
+      },
+    };
+  },
+  methods: {
+    ...mapMutations('kata', ['setSeriesFocus']),
+  },
+  computed: {
+    seriesOptions() {
+      return [
+        {
+          key: 'all',
+          value: 'all',
+          name: 'All',
+          kanji: '',
+        },
+        ...this.$store.getters['kata/seriesList'],
+      ];
+    },
   },
 };
 </script>
