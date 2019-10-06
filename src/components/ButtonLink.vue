@@ -26,7 +26,7 @@ export default {
       default: 'small',
       validator: val => ['small', 'medium', 'large', 'xlarge'].includes(val),
     },
-    class: {
+    classes: {
       type: String,
       default: '',
     },
@@ -60,8 +60,8 @@ export default {
         classList.push('py-4 px-8 text-2xl');
       }
 
-      if (this.class) {
-        classList.push(this.class);
+      if (this.classes) {
+        classList.push(this.classes);
       }
 
       return classList.join(' ');

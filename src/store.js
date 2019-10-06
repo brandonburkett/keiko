@@ -592,23 +592,95 @@ const kata = {
   },
   getters: {
     seriesByKey: state => key => state.series[key],
+
+    /**
+     * transoform series object to array
+     * @param state
+     * @returns {{value: string, key: string}[]}
+     */
     seriesList: state =>
       Object.keys(state.series).map(key => ({
         ...state.series[key],
         key,
         value: key,
       })),
-    total: state => state.list.length,
-    completedTotal: state => Object.keys(state.completed).length,
-    percentComplete: state =>
-      (Object.keys(state.completed).length / state.list.length).toLocaleString('en-us', {
-        style: 'percent',
-      }),
-    remaining: state => state.list.length - Object.keys(state.completed).length,
 
-    // get next kata that has not already been completed
+    /**
+     *  get total based on the selectedSeries
+     * @param state
+     * @returns {number}
+     */
+    total: state => {
+      // everything
+      if (state.selectedSeries === 'all') {
+        return state.list.length;
+      }
+
+      // single series
+      if (state.series[state.selectedSeries]) {
+        return state.list.filter(kata => kata.seriesKey === state.selectedSeries).length;
+      }
+
+      return 0;
+    },
+
+    /**
+     * @param state
+     * @returns {number}
+     */
+    completedTotal: state => Object.keys(state.completed).length,
+
+    /**
+     * Calc percent completed based on selected series
+     * @param state
+     * @returns {string}
+     */
+    percentComplete: state => {
+      // all
+      let series = state.list;
+
+      // single series
+      if (state.series[state.selectedSeries]) {
+        series = state.list.filter(kata => kata.seriesKey === state.selectedSeries);
+      }
+
+      return (Object.keys(state.completed).length / series.length).toLocaleString('en-us', {
+        style: 'percent',
+      });
+    },
+
+    /**
+     * Return remainging based on select series
+     * @param state
+     * @returns {number}
+     */
+    remaining: state => {
+      // all
+      let series = state.list;
+
+      // single series
+      if (state.series[state.selectedSeries]) {
+        series = state.list.filter(kata => kata.seriesKey === state.selectedSeries);
+      }
+
+      return series.length - Object.keys(state.completed).length;
+    },
+
+    /**
+     * get next kata that has not already been completed
+     * @param state
+     * @returns {Function}
+     */
     nextKata: state => () => {
-      const remainingKata = state.list.filter(
+      // all
+      let series = state.list;
+
+      // single series
+      if (state.series[state.selectedSeries]) {
+        series = state.list.filter(kata => kata.seriesKey === state.selectedSeries);
+      }
+
+      const remainingKata = series.filter(
         kata => !state.completed[`${kata.seriesKey}-${kata.order}`],
       );
 

@@ -21,7 +21,12 @@
           />
 
           <div class="mt-8 w-full">
-            <ButtonLink size="xlarge" label="Begin Training" to="/training" class="block w-full" />
+            <ButtonLink
+              size="xlarge"
+              label="Begin Training"
+              :to="`/training?series=${form.series}`"
+              classes="block w-full"
+            />
           </div>
         </div>
       </div>
@@ -31,7 +36,6 @@
 
 <script>
 // @ is an alias to /src
-import { mapMutations } from 'vuex';
 import PageFull from '@/components/PageFull.vue';
 import ButtonLink from '@/components/ButtonLink.vue';
 import BaseSelect from '@/components/BaseSelect.vue';
@@ -49,9 +53,6 @@ export default {
         series: 'all',
       },
     };
-  },
-  methods: {
-    ...mapMutations('kata', ['setSeriesFocus']),
   },
   computed: {
     seriesOptions() {
