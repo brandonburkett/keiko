@@ -26,6 +26,10 @@ export default {
       default: 'small',
       validator: val => ['small', 'medium', 'large', 'xlarge'].includes(val),
     },
+    class: {
+      type: String,
+      default: '',
+    },
   },
   computed: {
     styles() {
@@ -42,6 +46,9 @@ export default {
         ];
       }
 
+      // center text
+      classList.push('text-center');
+
       // sizes
       if (this.size === 'small') {
         classList.push('py-1 px-2 text-sm');
@@ -51,6 +58,10 @@ export default {
         classList.push('py-3 px-6 text-xl');
       } else if (this.size === 'xlarge') {
         classList.push('py-4 px-8 text-2xl');
+      }
+
+      if (this.class) {
+        classList.push(this.class);
       }
 
       return classList.join(' ');

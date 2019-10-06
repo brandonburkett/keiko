@@ -4,9 +4,9 @@
     <header
       class="bg-gray-900 h-20 w-auto flex justify-center items-center border-solid border-0 border-b-2 border-gray-ice sm:h-40"
     >
-      <router-link to="/" class="p-4 h-full w-auto">
+      <router-link to="/" class="p-4 h-full w-3/6">
         <img
-          class="object-contain h-full w-auto"
+          class="object-contain h-full w-auto mx-auto"
           alt="Keiko Isshin"
           src="../assets/images/isshin-ice2-800.png"
         />

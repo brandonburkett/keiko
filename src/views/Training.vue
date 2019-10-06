@@ -23,7 +23,7 @@
             {{ seriesByKey(kata.seriesKey).name }} - {{ kata.order }}
           </p>
           <div class="pt-1" v-if="!showDetails">
-            <Button
+            <BaseButton
               styleType="inverted"
               size="small"
               label="Details"
@@ -38,17 +38,17 @@
 
       <!-- CTAs  -->
       <div class="flex justify-between items-center" v-if="remaining">
-        <Button
+        <BaseButton
           styleType="inverted"
           size="small"
           label="Restart"
           @button-action="handleStartOver"
         />
 
-        <Button size="large" label="Next ⇒" @button-action="handleNextKata" />
+        <BaseButton size="large" label="Next ⇒" @button-action="handleNextKata" />
       </div>
       <div class="flex justify-center items-center" v-else>
-        <Button
+        <BaseButton
           styleType="inverted"
           size="large"
           label="Restart"
@@ -62,14 +62,14 @@
 <script>
 import { mapMutations, mapGetters } from 'vuex';
 import PageFull from '@/components/PageFull.vue';
-import Button from '@/components/Button.vue';
+import BaseButton from '@/components/BaseButton.vue';
 import ProgressBar from '@/components/ProgressBar.vue';
 
 export default {
   name: 'Training',
   components: {
     PageFull,
-    Button,
+    BaseButton,
     ProgressBar,
   },
   data() {

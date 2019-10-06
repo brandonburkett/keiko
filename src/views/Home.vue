@@ -10,17 +10,18 @@
       </div>
 
       <!-- CTAs -->
-      <div class="mt-8">
+      <div class="mt-8 w-64 mx-auto">
         <div class="flex flex-col justify-center items-center">
-          <div>
-            <BaseSelect
-              name="series"
-              label="Select Series"
-              :options="seriesOptions"
-              v-model="form.series"
-              :value="form.series"
-            />
-            <ButtonLink size="xlarge" label="Begin Training" to="/training" />
+          <BaseSelect
+            name="series"
+            label="Select Series"
+            :options="seriesOptions"
+            v-model="form.series"
+            :value="form.series"
+          />
+
+          <div class="mt-8 w-full">
+            <ButtonLink size="xlarge" label="Begin Training" to="/training" class="block w-full" />
           </div>
         </div>
       </div>
