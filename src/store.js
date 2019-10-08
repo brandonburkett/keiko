@@ -414,11 +414,12 @@ const kata = {
         order: 1,
       },
       {
-        name: 'Koboshidori',
+        name: 'Kobushidori',
         kanji: '拳取',
         meaning: 'Fist grasp',
         seriesKey: 'nanahon',
         order: 2,
+        ambiguous: true,
       },
       {
         name: 'Zetsumyoken',
@@ -464,11 +465,12 @@ const kata = {
         order: 1,
       },
       {
-        name: 'Koboshidori',
+        name: 'Kobushidori',
         kanji: '拳取',
         meaning: 'Fist grasp',
         seriesKey: 'tsumeIai',
         order: 2,
+        ambiguous: true,
       },
       {
         name: 'Namigaeshi',
