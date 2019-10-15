@@ -108,7 +108,7 @@ const kata = {
       {
         name: 'Inazuma',
         kanji: '稲妻',
-        meaning: 'Lighting',
+        meaning: 'Lightning',
         seriesKey: 'chuden',
         order: 3,
       },
@@ -330,7 +330,7 @@ const kata = {
       {
         name: 'Kiriage',
         kanji: '斬上',
-        meaning: 'Scarf cut',
+        meaning: 'Sash cut',
         seriesKey: 'toho',
         order: 3,
       },
@@ -367,7 +367,7 @@ const kata = {
       {
         name: 'Kesaguruma',
         kanji: '袈裟車',
-        meaning: 'Scarf wheel',
+        meaning: 'Robe wheel',
         seriesKey: 'toryuBangai',
         order: 3,
       },
@@ -512,7 +512,7 @@ const kata = {
       {
         name: 'Gansekiotoshi',
         kanji: '眼関落',
-        meaning: 'Stone drop',
+        meaning: 'Face-gate drop',
         seriesKey: 'tsumeIai',
         order: 8,
       },
