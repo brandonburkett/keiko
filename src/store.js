@@ -473,7 +473,7 @@ const kata = {
         ambiguous: true,
       },
       {
-        name: 'Namigaeshi',
+        name: 'Iwanami',
         kanji: '波返',
         meaning: 'Waves breaking against rocks',
         seriesKey: 'tsumeIai',
