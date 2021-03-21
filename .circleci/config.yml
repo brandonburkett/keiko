@@ -36,7 +36,9 @@ jobs:
           command: aws s3 sync ./dist s3://$AWS_S3_BUCKET --delete --cache-control max-age=86400,public
       - run:
           name: Create cloudfront invalidation
-          command: aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths "/*"
+          command: |
+            aws configure set preview.cloudfront true
+            aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths "/*"
 workflows:
   build:
     jobs:
