@@ -60,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useWazaStore } from '@/stores/wazaStore';
 import PageFull from '@/components/PageFull.vue';
@@ -71,12 +71,18 @@ const router = useRouter();
 const route = useRoute();
 const wazaStore = useWazaStore();
 
+// TODO: types
+interface State {
+  waza: object | null;
+}
+
 const state = ref({
   waza: null,
   showDetails: false,
 });
 
 /* LIFECYCLE */
+// TODO: fix types
 onBeforeMount(() => {
   wazaStore.setSeriesFocus(route.query.series || 'all');
   wazaStore.setOrder(route.query.order || 'random');
