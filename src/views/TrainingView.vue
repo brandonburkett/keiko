@@ -60,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeMount, ref } from 'vue';
+import { computed, nextTick, onBeforeMount, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useWazaStore } from '@/stores/wazaStore';
 import PageFull from '@/components/PageFull.vue';
@@ -85,10 +85,7 @@ onBeforeMount(() => {
 
 /* METHODS */
 function handleStartOver() {
-  state.value.waza = null;
-
   wazaStore.resetComplete();
-
   router.push('/');
 }
 
