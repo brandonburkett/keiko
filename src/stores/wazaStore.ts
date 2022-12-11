@@ -1,16 +1,35 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import { defineStore } from 'pinia';
 
-Vue.use(Vuex);
+interface State {
+  list: Array<ListItem>;
+  series: { [key: string]: SeriesItem };
+  completed: { [key: string]: boolean };
+  selectedSeries: string;
+  selectedOrder: string;
+}
 
-/**
- * Kata Module
- * ambiguous: true = kata name is in multiple series
- */
-const kata = {
-  namespaced: true,
+interface ListItem {
+  name: string;
+  kanji: string;
+  meaning: string;
+  seriesKey: string;
+  order: number;
+  ambiguous?: boolean;
+}
 
-  state: {
+interface SeriesItem {
+  name: string;
+  kanji: string;
+}
+
+interface markCompletePayload {
+  seriesKey: string;
+  order: string;
+}
+
+export const useWazaStore = defineStore('waza', {
+  // convert to a function
+  state: (): State => ({
     list: [
       {
         name: 'Mae',
@@ -581,42 +600,24 @@ const kata = {
     // selected series
     selectedSeries: 'all',
     selectedOrder: 'random',
-  },
-  mutations: {
-    markComplete: (state, { seriesKey, order }) => {
-      state.completed = { ...state.completed, [`${seriesKey}-${order}`]: true };
-    },
-    resetComplete: state => {
-      state.completed = {};
-    },
-    setSeriesFocus: (state, seriesKey) => {
-      state.selectedSeries = seriesKey;
-    },
-    setOrder: (state, order) => {
-      state.selectedOrder = order;
-    },
-  },
-  getters: {
-    seriesByKey: state => key => state.series[key],
+  }),
 
-    /**
-     * transoform series object to array
-     * @param state
-     * @returns {{value: string, key: string}[]}
-     */
-    seriesList: state =>
-      Object.keys(state.series).map(key => ({
+  getters: {
+    seriesByKey:
+      (state: State) =>
+      (key: string): SeriesItem =>
+        state.series[key],
+
+    // transform obj to array
+    seriesList: (state: State): SeriesItem[] =>
+      Object.keys(state.series).map((key) => ({
         ...state.series[key],
         key,
         value: key,
       })),
 
-    /**
-     *  get total based on the selectedSeries
-     * @param state
-     * @returns {number}
-     */
-    total: state => {
+    // total based on series selection
+    total: (state: State): number => {
       // everything
       if (state.selectedSeries === 'all') {
         return state.list.length;
@@ -624,30 +625,21 @@ const kata = {
 
       // single series
       if (state.series[state.selectedSeries]) {
-        return state.list.filter(kata => kata.seriesKey === state.selectedSeries).length;
+        return state.list.filter((kata) => kata.seriesKey === state.selectedSeries).length;
       }
 
       return 0;
     },
 
-    /**
-     * @param state
-     * @returns {number}
-     */
-    completedTotal: state => Object.keys(state.completed).length,
+    completedTotal: (state: State): number => Object.keys(state.completed).length,
 
-    /**
-     * Calc percent completed based on selected series
-     * @param state
-     * @returns {string}
-     */
-    percentComplete: state => {
+    percentComplete: (state: State): string => {
       // all
       let series = state.list;
 
       // single series
       if (state.series[state.selectedSeries]) {
-        series = state.list.filter(kata => kata.seriesKey === state.selectedSeries);
+        series = state.list.filter((kata) => kata.seriesKey === state.selectedSeries);
       }
 
       return (Object.keys(state.completed).length / series.length).toLocaleString('en-us', {
@@ -655,67 +647,66 @@ const kata = {
       });
     },
 
-    /**
-     * Return remainging based on select series
-     * @param state
-     * @returns {number}
-     */
-    remaining: state => {
+    remaining: (state: State): number => {
       // all
       let series = state.list;
 
       // single series
       if (state.series[state.selectedSeries]) {
-        series = state.list.filter(kata => kata.seriesKey === state.selectedSeries);
+        series = state.list.filter((kata) => kata.seriesKey === state.selectedSeries);
       }
 
       return series.length - Object.keys(state.completed).length;
     },
 
-    /**
-     * get next kata that has not already been completed
-     * @param state
-     * @returns {Function}
-     */
-    nextKata: state => () => {
+    nextWaza: (state: State): SeriesItem | null => {
       // all
       let series = state.list;
 
       // single series
       if (state.series[state.selectedSeries]) {
-        series = state.list.filter(kata => kata.seriesKey === state.selectedSeries);
+        series = state.list.filter((kata) => kata.seriesKey === state.selectedSeries);
       }
 
-      const remainingKata = series.filter(
-        kata => !state.completed[`${kata.seriesKey}-${kata.order}`],
+      const remainingWaza = series.filter(
+        (kata) => !state.completed[`${kata.seriesKey}-${kata.order}`],
       );
 
       // none left
-      if (remainingKata.length === 0) {
+      if (remainingWaza.length === 0) {
         return null;
       }
 
       // last one, no need for rand
-      if (remainingKata.length === 1) {
-        return remainingKata[0];
+      if (remainingWaza.length === 1) {
+        return remainingWaza[0];
       }
 
       // rand
       if (state.selectedOrder === 'random') {
         const min = 0;
-        const max = remainingKata.length;
+        const max = remainingWaza.length;
         const next = Math.floor(Math.random() * (max - min)) + min;
-        return remainingKata[next];
+        return remainingWaza[next];
       }
 
       // sequential
-      return remainingKata[0];
+      return remainingWaza[0];
     },
   },
-};
 
-export default new Vuex.Store({
-  modules: {
-    kata,
+  actions: {
+    markComplete({ seriesKey, order }: markCompletePayload) {
+      this.completed = { ...this.completed, [`${seriesKey}-${order}`]: true };
+    },
+    resetComplete() {
+      this.completed = {};
+    },
+    setSeriesFocus(seriesKey: string) {
+      this.selectedSeries = seriesKey;
+    },
+    setOrder(order: string) {
+      this.selectedOrder = order;
+    },
   },
 });

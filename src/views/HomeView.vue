@@ -16,8 +16,8 @@
             name="series"
             label="Select Series"
             :options="seriesOptions"
-            v-model="form.series"
-            :value="form.series"
+            v-model="formData.series"
+            :value="formData.series"
           />
 
           <div class="mt-4 w-full">
@@ -25,8 +25,8 @@
               name="order"
               label="Select Order"
               :options="seriesOrder"
-              v-model="form.order"
-              :value="form.order"
+              v-model="formData.order"
+              :value="formData.order"
             />
           </div>
 
@@ -34,7 +34,7 @@
             <ButtonLink
               size="xlarge"
               label="Begin Training"
-              :to="`/training?series=${form.series}&order=${form.order}`"
+              :to="`/training?series=${formData.series}&order=${formData.order}`"
               classes="block w-full"
             />
           </div>
@@ -44,53 +44,42 @@
   </PageFull>
 </template>
 
-<script>
+<script setup lang="ts">
 // @ is an alias to /src
+import { computed, ref } from 'vue';
 import PageFull from '@/components/PageFull.vue';
 import ButtonLink from '@/components/ButtonLink.vue';
 import BaseSelect from '@/components/BaseSelect.vue';
+import { useWazaStore } from '@/stores/wazaStore';
 
-export default {
-  name: 'Home',
-  components: {
-    PageFull,
-    ButtonLink,
-    BaseSelect,
+// not reactive
+const seriesOrder = [
+  {
+    key: 'sequential',
+    value: 'sequential',
+    name: 'Sequential',
   },
-  data() {
-    return {
-      form: {
-        series: 'all',
-        order: 'random',
-      },
-    };
+  {
+    key: 'random',
+    value: 'random',
+    name: 'Random',
   },
-  computed: {
-    seriesOptions() {
-      return [
-        {
-          key: 'all',
-          value: 'all',
-          name: 'All',
-          kanji: '',
-        },
-        ...this.$store.getters['kata/seriesList'],
-      ];
-    },
-    seriesOrder() {
-      return [
-        {
-          key: 'sequential',
-          value: 'sequential',
-          name: 'Sequential',
-        },
-        {
-          key: 'random',
-          value: 'random',
-          name: 'Random',
-        },
-      ];
-    },
+];
+
+const formData = ref({
+  series: 'all',
+  order: 'random',
+});
+
+const wazaStore = useWazaStore();
+
+const seriesOptions = computed(() => [
+  {
+    key: 'all',
+    value: 'all',
+    name: 'All',
+    kanji: '',
   },
-};
+  ...wazaStore.seriesList,
+]);
 </script>

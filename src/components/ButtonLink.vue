@@ -1,71 +1,61 @@
 <template>
-  <router-link :to="to" :class="styles">
+  <RouterLink :to="to" :class="styles">
     {{ label }}
-  </router-link>
+  </RouterLink>
 </template>
 
-<script>
-export default {
-  name: 'ButtonLink',
-  props: {
-    label: {
-      type: String,
-      default: '',
-    },
-    to: {
-      type: [String, Object],
-      default: '',
-    },
-    styleType: {
-      type: String,
-      default: 'standard',
-      validator: val => ['standard', 'inverted', 'link'].includes(val),
-    },
-    size: {
-      type: String,
-      default: 'small',
-      validator: val => ['small', 'medium', 'large', 'xlarge'].includes(val),
-    },
-    classes: {
-      type: String,
-      default: '',
-    },
-  },
-  computed: {
-    styles() {
-      let classList = [];
+<script setup lang="ts">
+import { computed } from 'vue';
+import { RouterLink } from 'vue-router';
 
-      // types
-      if (this.styleType === 'standard') {
-        classList = [
-          'border-2 border-gray-900 bg-gray-900 text-gray-ice font-semibold rounded hover:bg-gray-800 transition',
-        ];
-      } else if (this.styleType === 'inverted') {
-        classList = [
-          'border-2 border-gray-900 bg-gray-100 text-gray-900 font-semibold rounded hover:bg-white transition',
-        ];
-      }
+interface Props {
+  label: string;
+  to: string | object;
+  styleType?: string;
+  size?: string;
+  classes?: string;
+}
 
-      // center text
-      classList.push('text-center');
+const props = withDefaults(defineProps<Props>(), {
+  label: '',
+  to: '',
+  styleType: 'standard',
+  size: 'small',
+  classes: '',
+});
 
-      // sizes
-      if (this.size === 'small') {
-        classList.push('py-1 px-2 text-sm');
-      } else if (this.size === 'medium') {
-        classList.push('py-2 px-5');
-      } else if (this.size === 'large') {
-        classList.push('py-3 px-6 text-xl');
-      } else if (this.size === 'xlarge') {
-        classList.push('py-4 px-8 text-2xl');
-      }
+const styles = computed(() => {
+  let classList = [];
 
-      if (this.classes) {
-        classList.push(this.classes);
-      }
+  // types
+  if (props.styleType === 'standard') {
+    classList = [
+      'border-2 border-gray-900 bg-gray-900 text-gray-ice font-semibold rounded hover:bg-gray-800 transition',
+    ];
+  } else if (props.styleType === 'inverted') {
+    classList = [
+      'border-2 border-gray-900 bg-gray-100 text-gray-900 font-semibold rounded hover:bg-white transition',
+    ];
+  }
 
-      return classList.join(' ');
-    },
-  },
-};
+  // center text
+  classList.push('text-center');
+
+  // sizes
+  if (props.size === 'small') {
+    classList.push('py-1 px-2 text-sm');
+  } else if (props.size === 'medium') {
+    classList.push('py-2 px-5');
+  } else if (props.size === 'large') {
+    classList.push('py-3 px-6 text-xl');
+  } else if (props.size === 'xlarge') {
+    classList.push('py-4 px-8 text-2xl');
+  }
+
+  if (props.classes) {
+    classList.push(props.classes);
+  }
+
+  return classList.join(' ');
+});
 </script>

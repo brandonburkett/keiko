@@ -5,8 +5,8 @@ Semi-randomly display kata names for training.
 * Supports restarting the keiko session to from the beginning
 
 ## Tech stack
-* Project generated with vue-cli
-* Uses Vue, Vuex, and tailwind css
+* Project generated with create-vue
+* Uses Vue3, Pinia, TypeScript and tailwind css
 
 ---
 
@@ -14,27 +14,59 @@ Semi-randomly display kata names for training.
 
 ---
 
-## NPM scripts
+## Type Support for `.vue` Imports in TS
 
-### Project setup
-```
+TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+
+If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+
+1. Disable the built-in TypeScript Extension
+    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
+    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
+2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+
+---
+
+## Customize configuration
+
+See [Vite Configuration Reference](https://vitejs.dev/config/).
+
+---
+
+## Project Setup
+
+```sh
 npm install
 ```
 
-#### Compiles and hot-reloads for development
-```
-npm run start
+### Compile and Hot-Reload for Development
+
+```sh
+npm run dev
 ```
 
-#### Compiles and minifies for production
-```
+### Type-Check, Compile and Minify for Production
+
+```sh
 npm run build
 ```
 
-#### Lints and fixes files
+### Run Unit Tests with [Vitest](https://vitest.dev/)
+
+```sh
+npm run test:unit
 ```
+
+### Lint with [ESLint](https://eslint.org/)
+
+```sh
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+---
+
+## TODO
+* tailwind and vite
+* autoprefixing and vite
+* lint-staged / husky format and lint on commit
+* example vitest

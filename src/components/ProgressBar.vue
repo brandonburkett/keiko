@@ -19,22 +19,12 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'ProgressBar',
-  props: {
-    total: {
-      type: Number,
-      required: true,
-    },
-    completedTotal: {
-      type: Number,
-      required: true,
-    },
-    percentComplete: {
-      type: String,
-      required: false,
-    },
-  },
-};
+<script setup lang="ts">
+interface Props {
+  total: number;
+  completedTotal: number;
+  percentComplete: string;
+}
+
+withDefaults(defineProps<Props>(), {});
 </script>

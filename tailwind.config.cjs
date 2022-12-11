@@ -1,4 +1,7 @@
+/** @type {import('tailwindcss').Config} */
+/* eslint-env node */
 module.exports = {
+  content: ['./src/**/*.vue|ts|js', './src/*.vue|ts|js'],
   theme: {
     extend: {
       colors: {
@@ -21,4 +24,5 @@ module.exports = {
       },
     },
   },
+  plugins: [],
 };
