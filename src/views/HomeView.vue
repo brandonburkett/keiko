@@ -46,7 +46,7 @@
 
 <script setup lang="ts">
 // @ is an alias to /src
-import { computed, ref } from 'vue'
+import { computed, ref } from 'vue';
 import PageFull from '@/components/PageFull.vue';
 import ButtonLink from '@/components/ButtonLink.vue';
 import BaseSelect from '@/components/BaseSelect.vue';
@@ -73,7 +73,7 @@ const formData = ref({
 
 const wazaStore = useWazaStore();
 
-const seriesOptions = computed(() => ([
+const seriesOptions = computed(() => [
   {
     key: 'all',
     value: 'all',
@@ -81,7 +81,5 @@ const seriesOptions = computed(() => ([
     kanji: '',
   },
   ...wazaStore.seriesList,
-]));
-
-
+]);
 </script>

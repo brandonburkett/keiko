@@ -1,4 +1,3 @@
-import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 
 interface State {
@@ -29,7 +28,6 @@ interface markCompletePayload {
 }
 
 export const useWazaStore = defineStore('waza', {
-
   // convert to a function
   state: (): State => ({
     list: [
@@ -122,7 +120,7 @@ export const useWazaStore = defineStore('waza', {
       {
         name: 'Toranoissoku',
         kanji: '虎一足',
-        meaning: 'One leg of a tiger / Tiger\'s step',
+        meaning: "One leg of a tiger / Tiger's step",
         seriesKey: 'chuden',
         order: 2,
       },
@@ -605,11 +603,14 @@ export const useWazaStore = defineStore('waza', {
   }),
 
   getters: {
-    seriesByKey: (state: State) => (key: string): SeriesItem => state.series[key],
+    seriesByKey:
+      (state: State) =>
+      (key: string): SeriesItem =>
+        state.series[key],
 
     // transform obj to array
     seriesList: (state: State): SeriesItem[] =>
-      Object.keys(state.series).map(key => ({
+      Object.keys(state.series).map((key) => ({
         ...state.series[key],
         key,
         value: key,
@@ -624,8 +625,7 @@ export const useWazaStore = defineStore('waza', {
 
       // single series
       if (state.series[state.selectedSeries]) {
-        return state.list.filter(
-          (kata) => kata.seriesKey === state.selectedSeries).length;
+        return state.list.filter((kata) => kata.seriesKey === state.selectedSeries).length;
       }
 
       return 0;
@@ -639,7 +639,7 @@ export const useWazaStore = defineStore('waza', {
 
       // single series
       if (state.series[state.selectedSeries]) {
-        series = state.list.filter(kata => kata.seriesKey === state.selectedSeries);
+        series = state.list.filter((kata) => kata.seriesKey === state.selectedSeries);
       }
 
       return (Object.keys(state.completed).length / series.length).toLocaleString('en-us', {
@@ -653,7 +653,7 @@ export const useWazaStore = defineStore('waza', {
 
       // single series
       if (state.series[state.selectedSeries]) {
-        series = state.list.filter(kata => kata.seriesKey === state.selectedSeries);
+        series = state.list.filter((kata) => kata.seriesKey === state.selectedSeries);
       }
 
       return series.length - Object.keys(state.completed).length;
@@ -665,11 +665,11 @@ export const useWazaStore = defineStore('waza', {
 
       // single series
       if (state.series[state.selectedSeries]) {
-        series = state.list.filter(kata => kata.seriesKey === state.selectedSeries);
+        series = state.list.filter((kata) => kata.seriesKey === state.selectedSeries);
       }
 
       const remainingWaza = series.filter(
-        kata => !state.completed[`${kata.seriesKey}-${kata.order}`],
+        (kata) => !state.completed[`${kata.seriesKey}-${kata.order}`],
       );
 
       // none left

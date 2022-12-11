@@ -1,4 +1,3 @@
-
 <template>
   <div class="min-w-screen h-mobile-screen overflow-y-hidden">
     <!-- header -->
@@ -31,5 +30,5 @@
 </template>
 
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
+import { RouterLink } from 'vue-router';
 </script>

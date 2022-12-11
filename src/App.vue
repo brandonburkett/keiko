@@ -13,10 +13,9 @@
 
 <script setup lang="ts">
 import { onMounted, nextTick } from 'vue';
-import { RouterView } from 'vue-router'
+import { RouterView } from 'vue-router';
 
 onMounted(() => {
-
   const setFullHeight = () => {
     // let vh = window.innerHeight * 0.01;
     // document.documentElement.style.setProperty('--vh', `${vh}px`);

@@ -27,10 +27,9 @@ interface Props {
   label: string;
   value: string;
   options: object[] | string[];
-};
+}
 
 withDefaults(defineProps<Props>(), {
   value: '',
 });
-
 </script>

@@ -24,8 +24,7 @@ interface Props {
   total: number;
   completedTotal: number;
   percentComplete: string;
-};
+}
 
 withDefaults(defineProps<Props>(), {});
-
 </script>

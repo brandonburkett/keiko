@@ -5,8 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { RouterLink } from 'vue-router'
+import { computed } from 'vue';
+import { RouterLink } from 'vue-router';
 
 interface Props {
   label: string;
@@ -14,7 +14,7 @@ interface Props {
   styleType: string;
   size: string;
   classes: string;
-};
+}
 
 const props = withDefaults(defineProps<Props>(), {
   label: '',
@@ -57,6 +57,5 @@ const styles = computed(() => {
   }
 
   return classList.join(' ');
-})
-
+});
 </script>

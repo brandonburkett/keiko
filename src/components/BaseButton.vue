@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed } from 'vue';
 
 interface Props {
   type: string;
@@ -19,7 +19,7 @@ interface Props {
   linkTo: string;
   styleType: string;
   size: string;
-};
+}
 
 const props = withDefaults(defineProps<Props>(), {
   type: 'submit',
@@ -58,5 +58,4 @@ const styles = computed(() => {
 });
 
 const loadingLabel = computed(() => (props.loading ? 'Loading...' : props.label));
-
 </script>
