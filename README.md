@@ -62,3 +62,11 @@ npm run test:unit
 ```sh
 npm run lint
 ```
+
+---
+
+## TODO
+* tailwind and vite
+* autoprefixing and vite
+* lint-staged / husky format and lint on commit
+* example vitest
