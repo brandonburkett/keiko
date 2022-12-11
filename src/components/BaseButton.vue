@@ -12,15 +12,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-enum ButtonTypes {
-  'button',
-  'submit',
-  'reset',
-  undefined,
-}
-
 interface Props {
-  type?: ButtonTypes;
+  type?: 'submit' | 'reset' | 'button';
   label: string;
   loading?: boolean;
   linkTo?: string;
@@ -37,7 +30,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const styles = computed(() => {
-  let classList = [];
+  let classList: string[] = [];
 
   // types
   if (props.styleType === 'standard') {

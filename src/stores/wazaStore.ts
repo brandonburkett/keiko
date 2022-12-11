@@ -22,6 +22,13 @@ interface SeriesItem {
   kanji: string;
 }
 
+interface SeriesListItem {
+  name: string;
+  key: string;
+  value: string;
+  kanji: string;
+}
+
 interface markCompletePayload {
   seriesKey: string;
   order: string;
@@ -609,7 +616,7 @@ export const useWazaStore = defineStore('waza', {
         state.series[key],
 
     // transform obj to array
-    seriesList: (state: State): SeriesItem[] =>
+    seriesList: (state: State): SeriesListItem[] =>
       Object.keys(state.series).map((key) => ({
         ...state.series[key],
         key,

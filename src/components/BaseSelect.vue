@@ -26,7 +26,11 @@ interface Props {
   name: string;
   label: string;
   modelValue: string;
-  options: object[] | string[];
+  options: {
+    key: string;
+    value: string;
+    name: string;
+  }[];
 }
 
 withDefaults(defineProps<Props>(), {

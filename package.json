@@ -19,7 +19,7 @@
     "defaults"
   ],
   "lint-staged": {
-    "*.{js,vue}": [
+    "*.{ts,js,vue}": [
       "prettier --write",
       "eslint"
     ],

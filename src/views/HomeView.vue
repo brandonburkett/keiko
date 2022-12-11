@@ -78,7 +78,6 @@ const seriesOptions = computed(() => [
     key: 'all',
     value: 'all',
     name: 'All',
-    kanji: '',
   },
   ...wazaStore.seriesList,
 ]);

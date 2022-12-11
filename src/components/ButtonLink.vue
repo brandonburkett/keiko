@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const styles = computed(() => {
-  let classList = [];
+  let classList: string[] = [];
 
   // types
   if (props.styleType === 'standard') {
