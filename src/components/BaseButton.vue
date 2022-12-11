@@ -13,12 +13,12 @@
 import { computed } from 'vue';
 
 interface Props {
-  type: string;
+  type?: string;
   label: string;
-  loading: boolean;
-  linkTo: string;
-  styleType: string;
-  size: string;
+  loading?: boolean;
+  linkTo?: string;
+  styleType?: string;
+  size?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {

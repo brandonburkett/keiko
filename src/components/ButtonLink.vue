@@ -11,9 +11,9 @@ import { RouterLink } from 'vue-router';
 interface Props {
   label: string;
   to: string | object;
-  styleType: string;
-  size: string;
-  classes: string;
+  styleType?: string;
+  size?: string;
+  classes?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
