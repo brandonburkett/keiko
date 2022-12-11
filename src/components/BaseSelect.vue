@@ -5,7 +5,7 @@
       :name="name"
       :aria-label="label"
       :value="modelValue"
-      @input="emit('update:modelValue', $event.target.value)"
+      @input="passUpFoodChain"
     >
       <option v-for="option in options" :key="option.key" :value="option.value">
         {{ option.name }}
@@ -34,4 +34,9 @@ withDefaults(defineProps<Props>(), {
 });
 
 const emit = defineEmits(['update:modelValue']);
+
+function passUpFoodChain(event: Event) {
+  const value = (event.target as HTMLSelectElement).value;
+  emit('update:modelValue', value);
+}
 </script>

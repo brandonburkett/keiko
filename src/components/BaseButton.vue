@@ -12,8 +12,15 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
+enum ButtonTypes {
+  'button',
+  'submit',
+  'reset',
+  undefined,
+}
+
 interface Props {
-  type?: string;
+  type?: ButtonTypes;
   label: string;
   loading?: boolean;
   linkTo?: string;
