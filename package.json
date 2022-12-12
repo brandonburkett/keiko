@@ -21,7 +21,8 @@
   "lint-staged": {
     "*.{ts,js,vue}": [
       "prettier --write",
-      "eslint"
+      "eslint",
+      "bash -c 'npm run type-check'"
     ],
     "*.{css,scss}": [
       "prettier --write"
