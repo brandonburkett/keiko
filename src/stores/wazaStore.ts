@@ -594,7 +594,7 @@ export const useWazaStore = defineStore('waza', {
         kanji: '番外 ',
       },
       tsumeIai: {
-        name: 'Tsume Iai Kumitachi',
+        name: 'Tsumeai Kumitachi',
         kanji: '詰居合',
       },
       nanahon: {
