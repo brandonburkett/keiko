@@ -9,7 +9,7 @@
       />
 
       <!-- waza -->
-      <div class="text-center" v-if="wazaStore.remaining">
+      <div class="text-center" v-if="wazaStore.remaining && state.waza">
         <h1 class="text-6xl font-bold sm:text-6xl xl:text-7xl">{{ state.waza.kanji }}</h1>
         <h2 class="text-4xl font-bold mb-4 sm:text-4xl xl:text-6xl">{{ state.waza.name }}</h2>
 
@@ -62,7 +62,7 @@
 <script setup lang="ts">
 import { onBeforeMount, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useWazaStore } from '@/stores/wazaStore';
+import { type ListItem, useWazaStore } from '@/stores/wazaStore';
 import PageFull from '@/components/PageFull.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import ProgressBar from '@/components/ProgressBar.vue';
@@ -71,12 +71,10 @@ const router = useRouter();
 const route = useRoute();
 const wazaStore = useWazaStore();
 
-// TODO: types
-interface State {
-  waza: object | null;
-}
-
-const state = ref({
+const state = ref<{
+  waza: ListItem | null;
+  showDetails: boolean;
+}>({
   waza: null,
   showDetails: false,
 });
@@ -84,8 +82,12 @@ const state = ref({
 /* LIFECYCLE */
 // TODO: fix types
 onBeforeMount(() => {
-  wazaStore.setSeriesFocus(route.query.series || 'all');
-  wazaStore.setOrder(route.query.order || 'random');
+  wazaStore.setSeriesFocus(
+    typeof route.query.series === 'string' && route.query.series ? route.query.series : 'all',
+  );
+  wazaStore.setOrder(
+    typeof route.query.order === 'string' && route.query.order ? route.query.order : 'random',
+  );
   handleNext();
 });
 

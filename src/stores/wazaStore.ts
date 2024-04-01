@@ -1,38 +1,38 @@
 import { defineStore } from 'pinia';
 
-interface State {
-  list: Array<ListItem>;
-  series: { [key: string]: SeriesItem };
-  completed: { [key: string]: boolean };
+export type State = {
+  list: ListItem[];
+  series: Record<string, SeriesItem>;
+  completed: Record<string, boolean>;
   selectedSeries: string;
   selectedOrder: string;
-}
+};
 
-interface ListItem {
+export type ListItem = {
   name: string;
   kanji: string;
   meaning: string;
   seriesKey: string;
   order: number;
   ambiguous?: boolean;
-}
+};
 
-interface SeriesItem {
+export type SeriesItem = {
   name: string;
   kanji: string;
-}
+};
 
-interface SeriesListItem {
+export type SeriesListItem = {
   name: string;
   key: string;
   value: string;
   kanji: string;
-}
+};
 
-interface markCompletePayload {
+export type markCompletePayload = {
   seriesKey: string;
-  order: string;
-}
+  order: number;
+};
 
 export const useWazaStore = defineStore('waza', {
   // convert to a function
@@ -398,9 +398,9 @@ export const useWazaStore = defineStore('waza', {
         order: 3,
       },
       {
-        name: 'Takiguruma',
+        name: 'Tatsuguruma',
         kanji: '瀧車',
-        meaning: 'Waterfall wheel',
+        meaning: 'Waterfall wheel, old name "Takiguruma"',
         seriesKey: 'toryuBangai',
         order: 4,
       },
@@ -666,7 +666,7 @@ export const useWazaStore = defineStore('waza', {
       return series.length - Object.keys(state.completed).length;
     },
 
-    nextWaza: (state: State): SeriesItem | null => {
+    nextWaza: (state: State): ListItem | null => {
       // all
       let series = state.list;
 
