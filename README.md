@@ -1,5 +1,7 @@
 # Keiko
-[Live Demo](https://keiko.komeijyuku.com/)
+
+See [Live Demo](https://keiko.komeijyuku.com/)
+
 ---
 
 Semi-randomly display waza names for training.
