@@ -1,8 +1,9 @@
 # Keiko
-Semi-randomly display kata names for training.
-* All kihon kata
-* Randomly display "next" kata to perform, tracks against ones already completed
-* Supports restarting the keiko session to from the beginning
+Semi-randomly display waza names for training.
+* MJER waza
+* Randomly display "next" waza to perform, tracks against ones already completed
+* Sequential display
+* Supports restarting from the beginning
 
 ## Tech stack
 * Project generated with create-vue
