@@ -500,7 +500,7 @@ export const useWazaStore = defineStore('waza', {
       },
       {
         name: 'Iwanami',
-        kanji: '波返',
+        kanji: '岩浪',
         meaning: 'Waves breaking against rocks',
         seriesKey: 'tsumeIai',
         order: 3,
