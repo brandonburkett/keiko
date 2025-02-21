@@ -1,6 +1,6 @@
 <template>
   <PageFull>
-    <div class="flex flex-col h-full w-100 m-0 sm:w-5/6 sm:mx-auto lg:w-3/4 xl:w-1/2">
+    <div class="flex flex-col h-full w-full m-0 sm:w-5/6 sm:mx-auto lg:w-3/4 xl:w-1/2">
       <div>
         <h1 class="text-4xl font-bold text-center sm:text-6xl">Keiko Keiko Keiko</h1>
         <p class="text-justify my-4">
