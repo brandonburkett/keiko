@@ -1,5 +1,5 @@
 <template>
-  <div class="min-w-screen h-mobile-screen overflow-y-hidden">
+  <div class="min-w-screen h-dvh overflow-y-hidden">
     <!-- header -->
     <header
       class="bg-gray-900 h-20 w-auto flex justify-center items-center border-solid border-0 border-b-2 border-gray-ice sm:h-40"
@@ -15,7 +15,9 @@
 
     <!-- main content -->
     <section class="bg-gray-100 text-gray-900">
-      <div class="container h-body-screen-sm mx-auto p-8 bg-gray-100 sm:p-16 sm:h-body-screen">
+      <div
+        class="container h-[calc(100vh-8rem)] mx-auto p-8 bg-gray-100 sm:p-16 sm:h-[calc(100vh-13rem)]"
+      >
         <slot />
       </div>
     </section>
