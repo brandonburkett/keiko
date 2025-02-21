@@ -7,7 +7,7 @@
 
 @theme {
   --color-gray-ice: rgb(215, 213, 213);
-  --font-size-7xl: 7rem;
+  --text-7xl: 7rem;
 }
 
 .transition {
