@@ -19,7 +19,7 @@ onMounted(() => {
     // let vh = window.innerHeight * 0.01;
     // document.documentElement.style.setProperty('--vh', `${vh}px`);
     const vh = window.innerHeight;
-    // console.log('setFullHeight', vh);
+    console.log('setFullHeight', vh);
     document.documentElement.style.setProperty('--vh', `${vh}px`);
   };
 

@@ -24,11 +24,14 @@
     <footer
       class="bg-gray-900 h-12 flex justify-center items-center border-solid border-0 border-t-2 border-gray-ice"
     >
-      <p class="text-gray-100">Keiko App &copy; 2023</p>
+      <p class="text-gray-100">Keiko App &copy; {{ year }}</p>
     </footer>
   </div>
 </template>
 
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
+
+// not reactive
+const year = new Date().getFullYear();
 </script>
