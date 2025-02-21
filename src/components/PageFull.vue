@@ -16,7 +16,7 @@
     <!-- main content -->
     <section class="bg-gray-100 text-gray-900">
       <div
-        class="container h-[calc(100vh-8rem)] mx-auto p-8 bg-gray-100 sm:p-16 sm:h-[calc(100vh-13rem)]"
+        class="container h-[calc(100svh-8rem)] mx-auto p-8 bg-gray-100 sm:p-16 sm:h-[calc(100svh-13rem)]"
       >
         <slot />
       </div>

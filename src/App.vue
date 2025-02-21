@@ -20,7 +20,7 @@ import { onMounted } from 'vue';
 import { RouterView } from 'vue-router';
 
 onMounted(() => {
-  // no longer needed with new h-dvh class
+  // no longer needed with new h-svh class
   // const setFullHeight = () => {
   //   // let vh = window.innerHeight * 0.01;
   //   // document.documentElement.style.setProperty('--vh', `${vh}px`);
