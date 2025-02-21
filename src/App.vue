@@ -5,6 +5,11 @@
 <style>
 @import 'tailwindcss';
 
+@theme {
+  --color-gray-ice: rgb(215, 213, 213);
+  --font-size-7xl: 7rem;
+}
+
 .transition {
   transition: 0.3s;
 }
