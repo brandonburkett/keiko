@@ -3,9 +3,8 @@
 </template>
 
 <style>
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
 .transition {
   transition: 0.3s;
 }
