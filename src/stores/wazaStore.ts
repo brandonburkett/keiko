@@ -567,19 +567,19 @@ export const useWazaStore = defineStore('waza', {
     series: {
       shoden: {
         name: 'Shoden Waza',
-        kanji: '初傳技',
+        kanji: '初伝技',
       },
       chuden: {
         name: 'Chuden Waza',
-        kanji: '中傳技',
+        kanji: '中伝技',
       },
       okudenTachi: {
         name: 'Okuden Tachiwaza',
-        kanji: '奥傳立技',
+        kanji: '奥伝立技',
       },
       okudenSuwari: {
         name: 'Okuden Suwariwaza',
-        kanji: '奥傳座技',
+        kanji: '奥伝座技',
       },
       toho: {
         name: 'Toho Waza',
