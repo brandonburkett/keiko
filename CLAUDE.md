@@ -82,7 +82,8 @@ Applies to prose you write here (README, docs) and to chat replies:
 
 ## Deploy
 
-- CircleCI (`cimg/node:24.18.0`) runs on every branch: `npm ci` → type-check → lint → unit tests → `npm run build-only`.
-- Deploy runs only on `master`, through `.circleci/production.sh`. The AWS CLI v2 install is also gated on `master`, so branch builds skip it.
+- CircleCI (`cimg/node:24.18.0`) runs on `master` only: `npm ci` → type-check → lint → unit tests → `npm run build-only` → deploy.
+- Branches and PRs get no CI, so run type-check, lint, and tests locally before merging.
+- Deploy goes through `.circleci/production.sh`, guarded by a `CIRCLE_BRANCH` check as well as the workflow filter.
 - Cache-Control is tiered: `assets/` immutable 1yr, other static 30d, `index.html` 5min browser and 30d edge with `must-revalidate`. CloudFront is invalidated on every deploy.
 - The `assets/` sync deliberately omits `--delete`, a client holding the previous `index.html` still needs the old hashes. Orphans expire via a bucket lifecycle rule.
