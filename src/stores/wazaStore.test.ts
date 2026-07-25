@@ -82,5 +82,47 @@ describe('wazaStore', () => {
 
       expect(store.completedTotal).toBe(0);
     });
+
+    it('is idempotent, re-marking the same waza does not double count', () => {
+      const store = useWazaStore();
+      store.markComplete({ seriesKey: 'shoden', order: 1 });
+      store.markComplete({ seriesKey: 'shoden', order: 1 });
+
+      expect(store.completedTotal).toBe(1);
+    });
+  });
+
+  describe('series lookups', () => {
+    it('seriesByKey returns the series', () => {
+      const store = useWazaStore();
+
+      expect(store.seriesByKey('shoden')).toEqual({ name: 'Shoden Waza', kanji: '初伝技' });
+    });
+
+    it('seriesList turns the series map into options carrying key and value', () => {
+      const store = useWazaStore();
+      const list = store.seriesList;
+
+      expect(list.length).toBe(Object.keys(store.series).length);
+      list.forEach((series) => {
+        expect(series.key).toBe(series.value);
+        expect(store.series[series.key].name).toBe(series.name);
+      });
+    });
+
+    it('every waza points at a series that exists', () => {
+      const store = useWazaStore();
+
+      store.list.forEach((waza) => {
+        expect(store.series[waza.seriesKey], `${waza.name} -> ${waza.seriesKey}`).toBeDefined();
+      });
+    });
+
+    it('has no duplicate seriesKey and order pairs', () => {
+      const store = useWazaStore();
+      const keys = store.list.map((waza) => `${waza.seriesKey}-${waza.order}`);
+
+      expect(new Set(keys).size).toBe(keys.length);
+    });
   });
 });
