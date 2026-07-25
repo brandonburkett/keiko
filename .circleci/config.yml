@@ -1,49 +1,56 @@
 version: 2.1
+
 jobs:
   build:
     docker:
       - image: cimg/node:24.18.0
     steps:
       - checkout
-      - setup_remote_docker
-      - run:
-          # Run local steps before AWS is required so if they
-          # fail you don't waste build time installing AWS CLI
-
-          # Install AWS CLI
-          # - include aws cli ci docker:
-          #     https://github.com/circleci/circleci-images/issues/53
-          # - use global install for aws and pip instead of --user:
-          #     https://discuss.circleci.com/t/how-to-add-a-path-to-path-in-circle-2-0/11554
-          name: Install awscli
-          command: |
-            sudo apt-get update && sudo apt-get install -qq -y awscli
-      # cache based on our lock file
+      # cache node_modules keyed on the lock file
       - restore_cache:
-          key: npm-cache-{{ checksum "package.json" }}
+          key: npm-cache-{{ checksum "package-lock.json" }}
       - run:
           name: Install node modules
-          command: npm install
+          command: npm ci
       - save_cache:
-          key: npm-cache-{{ checksum "package.json" }}
+          key: npm-cache-{{ checksum "package-lock.json" }}
           paths:
             - ./node_modules
       - run:
-          name: NPM Build
+          name: Type check
+          command: npm run type-check
+      - run:
+          name: Lint
+          command: npm run lint
+      - run:
+          name: Unit tests
+          command: npm run test:unit
+      - run:
+          name: Build
           command: npm run build-only
+      # AWS is only needed to deploy, install it after the checks so a failing
+      # build does not pay for the download
       - run:
-          name: Deploy to S3
-          command: aws s3 sync ./dist s3://$AWS_S3_BUCKET --delete --cache-control max-age=86400,public
-      - run:
-          name: Create cloudfront invalidation
+          name: Install AWS CLI v2
           command: |
-            aws configure set preview.cloudfront true
-            aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_ID --paths "/*"
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+              unzip -q awscliv2.zip
+              sudo ./aws/install --update
+              aws --version
+            else
+              echo "Not master, skipping AWS CLI install"
+            fi
+      - run:
+          name: Deploy to S3 + CloudFront invalidation
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              echo "Deploying to production"
+              ./.circleci/production.sh
+            else
+              echo "Not master, skipping deploy"
+            fi
 workflows:
   build:
     jobs:
-      - build:
-          filters:
-            branches:
-              only:
-                - master
+      - build

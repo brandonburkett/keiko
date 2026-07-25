@@ -82,6 +82,7 @@ Applies to prose you write here (README, docs) and to chat replies:
 
 ## Deploy
 
-- CircleCI (`cimg/node:24.18.0`) on push to `master`: `npm install` → `npm run build-only` → S3 sync → CloudFront invalidation.
-- `aws s3 sync ./dist s3://$AWS_S3_BUCKET --delete` with a flat `max-age=86400` Cache-Control on everything.
-- The deploy job does not run type-check, lint, or tests, so those have to pass locally before merge.
+- CircleCI (`cimg/node:24.18.0`) runs on every branch: `npm ci` → type-check → lint → unit tests → `npm run build-only`.
+- Deploy runs only on `master`, through `.circleci/production.sh`. The AWS CLI v2 install is also gated on `master`, so branch builds skip it.
+- Cache-Control is tiered: `assets/` immutable 1yr, other static 30d, `index.html` 5min browser and 30d edge with `must-revalidate`. CloudFront is invalidated on every deploy.
+- The `assets/` sync deliberately omits `--delete`, a client holding the previous `index.html` still needs the old hashes. Orphans expire via a bucket lifecycle rule.

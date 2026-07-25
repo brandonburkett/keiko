@@ -7,6 +7,7 @@ Deferred follow-ups. Not blocking, tackled as time allows.
 | Priority  | Item                                                                                                          |
 | --------- | ------------------------------------------------------------------------------------------------------------- |
 | 🔴 High   | [Completed count is not scoped to the selected series](#completed-count-is-not-scoped-to-the-selected-series) |
+| 🔴 High   | [Add an S3 lifecycle rule for assets/](#add-an-s3-lifecycle-rule-for-assets)                                  |
 | 🟡 Medium | [Delete dead code](#delete-dead-code)                                                                         |
 | 🟡 Medium | [TypeScript 7](#typescript-7)                                                                                 |
 | 🟢 Low    | [Deduplicate the series filter in the store](#deduplicate-the-series-filter-in-the-store)                     |
@@ -14,6 +15,13 @@ Deferred follow-ups. Not blocking, tackled as time allows.
 | 🟢 Low    | [Widen the prettier globs](#widen-the-prettier-globs)                                                         |
 | 🟢 Low    | [Refresh the README](#refresh-the-readme)                                                                     |
 | 🟢 Low    | [Drop the js-beautify override](#drop-the-js-beautify-override)                                               |
+
+## Add an S3 lifecycle rule for assets/
+
+- `production.sh` syncs `dist/assets` without `--delete`, so a client holding the previous
+  `index.html` can still fetch the hashes it names. Orphaned hashes otherwise accumulate forever.
+- Add a bucket lifecycle rule expiring `assets/` objects after a year, matching the immutable
+  Cache-Control. Until that exists, the prefix grows by one build's worth of assets per deploy.
 
 ## Delete dead code
 
