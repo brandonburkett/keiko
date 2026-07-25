@@ -31,3 +31,7 @@ coverage
 *.sln
 *.sw?
 .vscode
+
+# Claude Code, .claude/settings.json stays tracked
+.claude/worktrees/
+.claude/settings.local.json
