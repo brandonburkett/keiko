@@ -4,8 +4,8 @@ Keiko, a training aid that semi-randomly displays MJER waza names. A **Vue 3** S
 
 ## Commands
 
-- `npm run dev`, dev server (http://localhost:5173)
-- `npm run build`, type-check plus production build to `dist/`
+- `npm run dev` (or `npm start`), dev server (http://localhost:5173)
+- `npm run build`, type-check then production build to `dist/`, fails fast on type errors
 - `npm run build-only`, skip the type-check, this is what CI runs
 - `npm run preview`, serve the built site
 - `npm run type-check`, `vue-tsc` over the app and tests
@@ -23,6 +23,7 @@ Keiko, a training aid that semi-randomly displays MJER waza names. A **Vue 3** S
   - State is in-memory only, a reload starts over.
 - Views in `src/views/` compose reusable pieces from `src/components/`. `PageFull.vue` is the layout wrapper (header, slot, footer), the rest are small presentational components.
 - **Tailwind 4** is the styling system, configured through the `@tailwindcss/vite` plugin. Theme customizations live in the `@theme` block inside `App.vue`, not a `tailwind.config.js`. There is no separate CSS file, components carry utility classes inline.
+- No PostCSS config and no autoprefixer. The Vite plugin does everything, and Vite 8 minifies CSS with lightningcss, which emits vendor prefixes for the `browserslist` targets.
 - Mobile Safari viewport handling matters here, use `svh` units (`h-svh`, `calc(100svh-8rem)`), not `vh` or `dvh`.
 - Deployed as static files to S3 behind CloudFront. History-mode routing means the bucket must serve `index.html` for unknown paths.
 
@@ -36,12 +37,19 @@ Keiko, a training aid that semi-randomly displays MJER waza names. A **Vue 3** S
 - Project structure and code style (braces, early returns, `??` over `||`, no `any`) live in [docs/CODE_STYLE.md](docs/CODE_STYLE.md).
 - Known follow-ups are tracked in [docs/BACKLOG.md](docs/BACKLOG.md).
 
+## Dependencies
+
+- Pinia 4 and vue-router 5 are ESM-only, and Pinia 4 needs `@vue/devtools-api` installed explicitly, it is a non-optional peer.
+- `overrides` pins `js-beautify` to v2 so `@vue/test-utils` stops pulling the old `minimatch` chain. Drop the override once test-utils depends on js-beautify 2 itself. Keep `npm audit` at zero.
+- `npm run build` chains type-check and build with `&&`, no task runner dependency.
+
 ## Tests
 
-- Vitest with jsdom, run from `--root src/`, so specs live under `src/`.
-- Colocate specs next to the code, `wazaStore.ts` pairs with `wazaStore.spec.ts`.
+- Vitest with jsdom, run from `--root src/`, so tests live under `src/`.
+- Colocate tests next to the code, `wazaStore.ts` pairs with `wazaStore.test.ts`. Use `*.test.ts`, not `*.spec.ts`.
 - Pinia stores need a fresh instance per test, `setActivePinia(createPinia())` in `beforeEach`.
 - `nextWaza` uses `Math.random()` in random mode, assert on properties that hold for any pick (series, membership) or force sequential order.
+- The details paragraph in `TrainingView` uses `v-show`, so it stays in the DOM. Assert with `isVisible()` and mount with `attachTo: document.body`, jsdom reports detached nodes as hidden regardless of style.
 
 ## Commits
 

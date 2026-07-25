@@ -10,7 +10,7 @@ Prettier does not make.
 src/
 ├─ views/            one .vue per route, composed from components
 ├─ components/       reusable presentational components, PageFull.vue is the layout wrapper
-├─ stores/           Pinia stores plus their colocated *.spec.ts
+├─ stores/           Pinia stores plus their colocated *.test.ts
 ├─ router/           route table
 ├─ assets/           images imported by components
 ├─ types/            shared type declarations
@@ -21,7 +21,7 @@ docs/                project docs (this file, BACKLOG.md)
 
 - Components and views are PascalCase `.vue`, everything else is camelCase `.ts`.
 - Cross-folder imports use the `@/*` alias, same-folder imports stay relative (`./`).
-- Tests colocate as `*.spec.ts` next to the code they cover.
+- Tests colocate as `*.test.ts` next to the code they cover.
 
 ### Vue components
 

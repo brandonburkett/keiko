@@ -4,37 +4,36 @@ Deferred follow-ups. Not blocking, tackled as time allows.
 
 ## Priority
 
-| Priority  | Item                                                                                      |
-| --------- | ----------------------------------------------------------------------------------------- |
-| 🔴 High   | [Pick one Tailwind integration](#pick-one-tailwind-integration)                           |
-| 🟡 Medium | [Held major upgrades](#held-major-upgrades)                                               |
-| 🟡 Medium | [Delete dead code](#delete-dead-code)                                                     |
-| 🟢 Low    | [Deduplicate the series filter in the store](#deduplicate-the-series-filter-in-the-store) |
-| 🟢 Low    | [Persist progress across reloads](#persist-progress-across-reloads)                       |
-| 🟢 Low    | [Refresh the README](#refresh-the-readme)                                                 |
-| 🟢 Low    | [Dev-only audit advisories](#dev-only-audit-advisories)                                   |
-
-## Pick one Tailwind integration
-
-- `vite.config.mts` uses `@tailwindcss/vite` and `postcss.config.cjs` uses `@tailwindcss/postcss`,
-  so Tailwind is wired in twice. Keep the Vite plugin, drop the PostCSS config.
-- `autoprefixer` and `postcss` are declared as dependencies but are not in the plugin list, so
-  autoprefixing never actually runs. Tailwind 4 prefixes via lightningcss, so removing them is
-  likely correct, verify against `browserslist` first.
-
-## Held major upgrades
-
-Deliberately held back in the July 2026 refresh, each needs its own pass:
-
-- `eslint` 10 and `@eslint/js` 10, drops the `/* eslint-env */` shim and changes config defaults.
-- `typescript` 7, the native port, needs `vue-tsc` and the Vue ESLint configs to catch up.
-- `vite` 8, verify the Tailwind plugin and the S3 asset hashing still behave.
-- `pinia` 4 and `vue-router` 5, both have breaking API changes to audit against the store and router.
+| Priority  | Item                                                                                                          |
+| --------- | ------------------------------------------------------------------------------------------------------------- |
+| 🔴 High   | [Completed count is not scoped to the selected series](#completed-count-is-not-scoped-to-the-selected-series) |
+| 🟡 Medium | [Delete dead code](#delete-dead-code)                                                                         |
+| 🟡 Medium | [TypeScript 7](#typescript-7)                                                                                 |
+| 🟢 Low    | [Deduplicate the series filter in the store](#deduplicate-the-series-filter-in-the-store)                     |
+| 🟢 Low    | [Persist progress across reloads](#persist-progress-across-reloads)                                           |
+| 🟢 Low    | [Widen the prettier globs](#widen-the-prettier-globs)                                                         |
+| 🟢 Low    | [Refresh the README](#refresh-the-readme)                                                                     |
+| 🟢 Low    | [Drop the js-beautify override](#drop-the-js-beautify-override)                                               |
 
 ## Delete dead code
 
 - `src/App.vue` still carries the commented-out `setFullHeight` block, superseded by `h-svh`.
 - `src/types/interfaces.ts` is an empty file.
+
+## TypeScript 7
+
+- Held at 5.9 in the July 2026 refresh. The native port needs `vue-tsc` and the Vue ESLint configs
+  to support it first, recheck their peer ranges before trying.
+
+## Completed count is not scoped to the selected series
+
+- `completedTotal`, `remaining`, and `percentComplete` all use `Object.keys(state.completed).length`,
+  which counts completions across every series, but compare it against the selected series only.
+- Complete a few shoden waza, then `setSeriesFocus('chuden')` without `resetComplete`, and remaining
+  is short by the shoden count and percent can exceed 100.
+- Not reachable in the current UI, `TrainingView` sets the series once on mount and Restart resets
+  before going home. It becomes a real bug the moment series can be switched mid-session.
+- Fix by filtering `completed` keys by the selected series, then add the regression tests.
 
 ## Deduplicate the series filter in the store
 
@@ -46,14 +45,20 @@ Deliberately held back in the July 2026 refresh, each needs its own pass:
 - `completed` is in-memory only, so a refresh mid-session loses the training run.
 - localStorage would be enough, no backend needed.
 
+## Widen the prettier globs
+
+- `prettier:write` and `prettier:check` target `{js,vue,css,scss}`, so no `.ts`, `.mts`, or `.mjs`
+  file has ever been formatted by them, and there is no `.scss` in the repo.
+- Widening to `{js,mjs,cjs,ts,mts,vue,css}` is correct but reformats existing TypeScript on the
+  first run, so do it as its own commit.
+
 ## Refresh the README
 
 - The TODO section lists work that is now done (tailwind and vite, lint-staged and husky, example
   vitest). Prune it and drop the Volar Take Over Mode instructions, they predate the current tooling.
 
-## Dev-only audit advisories
+## Drop the js-beautify override
 
-- `npm audit` reports 9 high advisories, all transitive DoS issues in `minimatch` and
-  `brace-expansion` reached through `eslint` and `@vue/test-utils` → `js-beautify`.
-- Nothing ships to the browser bundle. Clears when those upstream packages update, no action needed
-  beyond rechecking after the ESLint 10 upgrade.
+- `overrides` pins `js-beautify` to v2 so `@vue/test-utils` stops resolving the vulnerable
+  `editorconfig` and `glob` chain. Remove it once test-utils depends on js-beautify 2 directly.
+- Verify with `npm audit` (expect zero) and the `wrapper.html()` assertion in `BaseButton.test.ts`.
