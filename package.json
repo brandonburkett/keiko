@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "vite",
     "start": "vite",
-    "build": "run-p type-check build-only",
+    "build": "npm run type-check && npm run build-only",
     "preview": "vite preview",
     "test:unit": "vitest run --environment jsdom --root src/",
     "test:watch": "vitest --environment jsdom --root src/",
@@ -35,13 +35,13 @@
     ]
   },
   "dependencies": {
-    "pinia": "^3.0.4",
+    "@vue/devtools-api": "^8.2.1",
+    "pinia": "^4.0.2",
     "vue": "^3.5.40",
-    "vue-router": "^4.6.4"
+    "vue-router": "^5.2.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.5",
-    "@tailwindcss/postcss": "^4.3.3",
+    "@eslint/js": "^10.0.1",
     "@tailwindcss/vite": "^4.3.3",
     "@types/jsdom": "^28.0.3",
     "@types/node": "^24.13.3",
@@ -50,23 +50,23 @@
     "@vue/eslint-config-typescript": "^14.9.0",
     "@vue/test-utils": "^2.4.11",
     "@vue/tsconfig": "^0.9.1",
-    "autoprefixer": "^10.5.4",
-    "eslint": "^9.39.5",
+    "eslint": "^10.8.0",
     "eslint-plugin-vue": "^10.10.0",
+    "globals": "^17.7.0",
     "husky": "^9.1.7",
     "jsdom": "^29.1.1",
     "lint-staged": "^17.2.0",
-    "npm-run-all2": "^8.0.4",
-    "postcss": "^8.5.23",
     "prettier": "^3.9.6",
     "tailwindcss": "^4.3.3",
     "typescript": "~5.9.3",
-    "vite": "^6.4.3",
+    "vite": "^8.1.5",
     "vitest": "^4.1.10",
     "vue-tsc": "^3.3.8"
   },
   "allowScripts": {
-    "esbuild@0.25.12": true,
     "fsevents@2.3.3": true
+  },
+  "overrides": {
+    "js-beautify": "^2.0.3"
   }
 }

@@ -1,75 +1,27 @@
+import { defineConfig, globalIgnores } from 'eslint/config';
 import js from '@eslint/js';
+import globals from 'globals';
 import vueTsEslintConfig from '@vue/eslint-config-typescript';
 import eslintConfigPrettier from '@vue/eslint-config-prettier';
 
-export default [
-  // standalone ignores object, this is the global ignore list
-  { ignores: ['dist/**', 'coverage/**', 'public/**'] },
-  {
-    files: [
-      '**/*.vue',
-      '**/*.js',
-      '**/*.jsx',
-      '**/*.cjs',
-      '**/*.mjs',
-      '**/*.ts',
-      '**/*.tsx',
-      '**/*.cts',
-      '**/*.mts',
-    ],
-  },
+export default defineConfig([
+  globalIgnores(['dist/**', 'coverage/**', 'public/**']),
+
   js.configs.recommended,
   ...vueTsEslintConfig({
-    supportedScriptLangs: {
-      ts: true,
-      js: true,
-    },
+    supportedScriptLangs: { ts: true, js: true },
     rootDir: import.meta.dirname,
   }),
   eslintConfigPrettier,
 
-  // custom overrides
   {
-    languageOptions: {
-      ecmaVersion: 'latest',
-      globals: {},
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-          es6: true,
-          classes: true,
-        },
-      },
-    },
-    rules: {
-      // "no-console": 0,
-      // indent: "off",
-      // "space-before-function-paren": 0,
-      //
-      // "no-unused-vars": ["error", {
-      //   vars: "all",
-      //   args: "none",
-      //   ignoreRestSiblings: false,
-      //   argsIgnorePattern: "^h$",
-      // }],
-      //
-      // "vue/multi-word-component-names": 0,
-      //
-      // "@typescript-eslint/no-explicit-any": 1,
-    },
+    files: ['src/**/*.{ts,vue}'],
+    languageOptions: { globals: globals.browser },
   },
 
-  // CommonJS config files, flat config dropped support for /* eslint-env node */
+  // config files at the root run in node, not the browser
   {
-    files: ['**/*.cjs'],
-    languageOptions: {
-      sourceType: 'commonjs',
-      globals: {
-        module: 'writable',
-        require: 'readonly',
-        process: 'readonly',
-        __dirname: 'readonly',
-      },
-    },
+    files: ['*.config.{mjs,mts}'],
+    languageOptions: { globals: globals.node },
   },
-];
+]);
