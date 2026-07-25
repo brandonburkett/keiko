@@ -6,6 +6,14 @@ jobs:
       - image: cimg/node:24.18.0
     steps:
       - checkout
+      # Install AWS CLI v2 (official installer; the node image doesn't ship aws)
+      - run:
+          name: Install AWS CLI v2
+          command: |
+            curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip -q awscliv2.zip
+            sudo ./aws/install --update
+            aws --version
       # cache node_modules keyed on the lock file
       - restore_cache:
           key: npm-cache-{{ checksum "package-lock.json" }}
@@ -16,39 +24,33 @@ jobs:
           key: npm-cache-{{ checksum "package-lock.json" }}
           paths:
             - ./node_modules
+      # type check (vue-tsc)
       - run:
           name: Type check
           command: npm run type-check
       - run:
           name: Lint
           command: npm run lint
+      # unit tests (Vitest)
       - run:
-          name: Unit tests
+          name: Run tests
           command: npm run test:unit
+      # type check already ran above, so build without it
       - run:
           name: Build
           command: npm run build-only
-      # AWS is only needed to deploy, install it after the checks so a failing
-      # build does not pay for the download
-      - run:
-          name: Install AWS CLI v2
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-              unzip -q awscliv2.zip
-              sudo ./aws/install --update
-              aws --version
-            else
-              echo "Not master, skipping AWS CLI install"
-            fi
       - run:
           name: Deploy to S3 + CloudFront invalidation
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               echo "Deploying to production"
               ./.circleci/production.sh
-            else
-              echo "Not master, skipping deploy"
+            elif [[ ${CIRCLE_BRANCH} =~ int\/.* ]]; then
+              echo "No deployment for staging"
+              # ./.circleci/staging.sh
+            elif [[ ${CIRCLE_BRANCH} =~ hot\/.* ]]; then
+              echo "No deployment for hot fixes"
+              # ./.circleci/staging.sh
             fi
 workflows:
   build:
