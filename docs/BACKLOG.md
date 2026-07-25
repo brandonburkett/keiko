@@ -7,6 +7,7 @@ Deferred follow-ups. Not blocking, tackled as time allows.
 | Priority  | Item                                                                                                          |
 | --------- | ------------------------------------------------------------------------------------------------------------- |
 | 🔴 High   | [Completed count is not scoped to the selected series](#completed-count-is-not-scoped-to-the-selected-series) |
+| 🟡 Medium | [Add an S3 lifecycle rule for assets/](#add-an-s3-lifecycle-rule-for-assets)                                  |
 | 🟡 Medium | [Delete dead code](#delete-dead-code)                                                                         |
 | 🟡 Medium | [TypeScript 7](#typescript-7)                                                                                 |
 | 🟢 Low    | [Deduplicate the series filter in the store](#deduplicate-the-series-filter-in-the-store)                     |
@@ -14,6 +15,18 @@ Deferred follow-ups. Not blocking, tackled as time allows.
 | 🟢 Low    | [Widen the prettier globs](#widen-the-prettier-globs)                                                         |
 | 🟢 Low    | [Refresh the README](#refresh-the-readme)                                                                     |
 | 🟢 Low    | [Drop the js-beautify override](#drop-the-js-beautify-override)                                               |
+
+## Add an S3 lifecycle rule for assets/
+
+- `production.sh` syncs `dist/assets` without `--delete`, so a client holding the previous
+  `index.html` can still fetch the hashes it names. Orphaned hashes otherwise accumulate forever.
+- Deferring is safe, nothing breaks without the rule. The prefix just grows by one build's worth
+  of assets per deploy, roughly 150kB, so this is housekeeping rather than a fix.
+- Add a bucket lifecycle rule expiring `assets/` objects after a year, matching the immutable
+  Cache-Control. `put-bucket-lifecycle-configuration` replaces every existing rule, so read the
+  current config first.
+- The rule only expires orphans because each CI build writes fresh mtimes, so `aws s3 sync`
+  re-uploads and re-dates the whole current asset set every deploy.
 
 ## Delete dead code
 
