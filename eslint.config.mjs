@@ -3,6 +3,8 @@ import vueTsEslintConfig from '@vue/eslint-config-typescript';
 import eslintConfigPrettier from '@vue/eslint-config-prettier';
 
 export default [
+  // standalone ignores object, this is the global ignore list
+  { ignores: ['dist/**', 'coverage/**', 'public/**'] },
   {
     files: [
       '**/*.vue',
@@ -14,10 +16,6 @@ export default [
       '**/*.tsx',
       '**/*.cts',
       '**/*.mts',
-    ],
-    ignores: [
-      "**/public",
-      "**/node_modules",
     ],
   },
   js.configs.recommended,
@@ -58,6 +56,20 @@ export default [
       // "vue/multi-word-component-names": 0,
       //
       // "@typescript-eslint/no-explicit-any": 1,
+    },
+  },
+
+  // CommonJS config files, flat config dropped support for /* eslint-env node */
+  {
+    files: ['**/*.cjs'],
+    languageOptions: {
+      sourceType: 'commonjs',
+      globals: {
+        module: 'writable',
+        require: 'readonly',
+        process: 'readonly',
+        __dirname: 'readonly',
+      },
     },
   },
 ];
