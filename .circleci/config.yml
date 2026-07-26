@@ -6,7 +6,8 @@ jobs:
       - image: cimg/node:24.18.0
     steps:
       - checkout
-      # Install AWS CLI v2 (official installer; the node image doesn't ship aws)
+      # Install AWS CLI v2 (official installer; the node image doesn't ship aws).
+      # This unzips into ./aws in the project, eslint.config.mjs ignores it.
       - run:
           name: Install AWS CLI v2
           command: |
